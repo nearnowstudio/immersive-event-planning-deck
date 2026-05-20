@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Immersive Event Planning Deck — Film Hub Midlands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ff-display: 'DM Serif Display', Georgia, serif;
+  --ff-body: 'DM Sans', system-ui, sans-serif;
+  --ink: #1a1a18;
+  --ink-2: #4a4a46;
+  --ink-3: #8a8a84;
+  --ink-4: #b8b8b0;
+  --surface: #faf9f6;
+  --surface-2: #f2f0eb;
+  --surface-3: #e8e5de;
+  --white: #ffffff;
+  --radius: 10px;
+  --radius-lg: 16px;
+  /* category colours */
+  --c-vision-bg:    #eeedfe; --c-vision-text:    #3c3489; --c-vision-mid: #534ab7;
+  --c-space-bg:     #e1f5ee; --c-space-text:     #085041; --c-space-mid: #0f6e56;
+  --c-audience-bg:  #faece7; --c-audience-text:  #712b13; --c-audience-mid: #993c1d;
+  --c-ops-bg:       #e6f1fb; --c-ops-text:       #0c447c; --c-ops-mid: #185fa5;
+  --c-marketing-bg: #fbeaf0; --c-marketing-text: #72243e; --c-marketing-mid: #993556;
+  --c-risk-bg:      #faeeda; --c-risk-text:      #633806; --c-risk-mid: #854f0b;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--ff-body);
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── HEADER ─── */
+.site-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--surface-3);
+  padding: 0 2rem;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px; gap: 1rem;
+}
+.logo {
+  display: flex; align-items: baseline; gap: 10px; text-decoration: none;
+}
+.logo-title {
+  font-family: var(--ff-display);
+  font-size: 17px; color: var(--ink); line-height: 1;
+}
+.logo-sub {
+  font-size: 11px; color: var(--ink-3); letter-spacing: .05em; text-transform: uppercase;
+}
+.header-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ─── BUTTONS ─── */
+.btn {
+  font-family: var(--ff-body); font-size: 13px; font-weight: 500;
+  padding: 7px 16px; border-radius: 6px; cursor: pointer;
+  border: 1px solid transparent; transition: all .15s; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-ghost {
+  background: transparent; border-color: var(--surface-3);
+  color: var(--ink-2);
+}
+.btn-ghost:hover { background: var(--surface-2); border-color: var(--surface-3); }
+.btn-primary {
+  background: var(--ink); color: var(--white); border-color: var(--ink);
+}
+.btn-primary:hover { background: var(--ink-2); }
+.btn-danger {
+  background: transparent; border-color: #f09595; color: #a32d2d;
+}
+.btn-danger:hover { background: #fcebeb; }
+.btn-icon {
+  width: 34px; height: 34px; padding: 0; justify-content: center;
+  background: transparent; border-color: var(--surface-3); color: var(--ink-2);
+}
+.btn-icon:hover { background: var(--surface-2); }
+
+/* ─── MAIN LAYOUT ─── */
+.main-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+
+/* ─── HERO ─── */
+.hero {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--surface-3);
+  margin-bottom: 1.75rem;
+}
+.hero h1 {
+  font-family: var(--ff-display);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400; line-height: 1.15;
+  color: var(--ink); margin-bottom: .5rem;
+}
+.hero h1 em { font-style: italic; color: var(--ink-2); }
+.hero-meta {
+  font-size: 13px; color: var(--ink-3);
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.hero-meta a { color: var(--ink-3); }
+.hero-meta a:hover { color: var(--ink); }
+.dot { color: var(--surface-3); }
+
+/* ─── CONTROLS BAR ─── */
+.controls {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  align-items: center; margin-bottom: 1.25rem;
+}
+.controls-left { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+.controls-right { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+
+/* Category filter pills */
+.cat-filter {
+  font-family: var(--ff-body); font-size: 12px; font-weight: 500;
+  padding: 5px 14px; border-radius: 20px; cursor: pointer;
+  border: 1px solid var(--surface-3);
+  background: var(--white); color: var(--ink-2);
+  transition: all .15s;
+}
+.cat-filter.active-all    { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.cat-filter.active-vision    { background: var(--c-vision-bg); color: var(--c-vision-text); border-color: var(--c-vision-mid); }
+.cat-filter.active-space     { background: var(--c-space-bg); color: var(--c-space-text); border-color: var(--c-space-mid); }
+.cat-filter.active-audience  { background: var(--c-audience-bg); color: var(--c-audience-text); border-color: var(--c-audience-mid); }
+.cat-filter.active-ops       { background: var(--c-ops-bg); color: var(--c-ops-text); border-color: var(--c-ops-mid); }
+.cat-filter.active-marketing { background: var(--c-marketing-bg); color: var(--c-marketing-text); border-color: var(--c-marketing-mid); }
+.cat-filter.active-risk      { background: var(--c-risk-bg); color: var(--c-risk-text); border-color: var(--c-risk-mid); }
+
+/* Mode tabs */
+.mode-tabs {
+  display: flex; gap: 0; background: var(--surface-2);
+  border-radius: 8px; padding: 3px;
+}
+.mode-tab {
+  font-family: var(--ff-body); font-size: 12px; font-weight: 500;
+  padding: 5px 14px; border-radius: 6px; cursor: pointer;
+  border: none; background: transparent; color: var(--ink-3);
+  transition: all .15s;
+}
+.mode-tab.active {
+  background: var(--white); color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.mode-hint {
+  font-size: 12px; color: var(--ink-3);
+  padding: .5rem .75rem; background: var(--surface-2);
+  border-radius: 6px; margin-bottom: 1rem;
+}
+
+/* ─── CARD GRID ─── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 14px;
+}
+
+/* ─── FLIP CARD ─── */
+.card-wrap {
+  perspective: 1000px; min-height: 210px; cursor: pointer;
+}
+.card-inner {
+  position: relative; width: 100%; min-height: 210px;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute; inset: 0; min-height: 210px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-lg); padding: 1.2rem 1.3rem;
+  border: 1px solid var(--surface-3);
+  display: flex; flex-direction: column;
+}
+.card-back-face { transform: rotateY(180deg); background: var(--white); }
+.card-front-face { background: var(--white); }
+
+.card-num {
+  position: absolute; top: 1rem; right: 1.2rem;
+  font-size: 11px; color: var(--ink-4); font-weight: 500;
+}
+.card-cat-pill {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; margin-bottom: .7rem;
+  width: fit-content;
+}
+.pill-vision    { background: var(--c-vision-bg);    color: var(--c-vision-text); }
+.pill-space     { background: var(--c-space-bg);     color: var(--c-space-text); }
+.pill-audience  { background: var(--c-audience-bg);  color: var(--c-audience-text); }
+.pill-ops       { background: var(--c-ops-bg);       color: var(--c-ops-text); }
+.pill-marketing { background: var(--c-marketing-bg); color: var(--c-marketing-text); }
+.pill-risk      { background: var(--c-risk-bg);      color: var(--c-risk-text); }
+
+.card-name {
+  font-family: var(--ff-display); font-size: 18px;
+  font-weight: 400; color: var(--ink); margin-bottom: .4rem; line-height: 1.2;
+}
+.card-desc {
+  font-size: 13px; color: var(--ink-2); line-height: 1.55;
+  flex: 1;
+}
+.card-flip-hint {
+  margin-top: .8rem; font-size: 11px; color: var(--ink-4);
+  display: flex; align-items: center; gap: 4px;
+}
+.card-flip-hint svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* Back */
+.back-section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-4); margin-bottom: 5px;
+}
+.back-question {
+  font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: .9rem;
+  line-height: 1.5;
+}
+.back-prompts {
+  font-size: 12px; color: var(--ink-2); font-style: italic;
+  line-height: 1.55; flex: 1;
+}
+.back-flip-back {
+  margin-top: .8rem; font-size: 11px; color: var(--ink-4);
+  background: none; border: none; cursor: pointer; font-family: var(--ff-body);
+  display: flex; align-items: center; gap: 4px; padding: 0;
+}
+
+/* Card action row (edit/delete) */
+.card-actions {
+  display: none; position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 8px 10px;
+  background: linear-gradient(transparent, rgba(255,255,255,.95) 40%);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  justify-content: flex-end; gap: 6px;
+}
+.card-wrap:hover .card-actions { display: flex; }
+.card-wrap.flipped .card-actions { display: none !important; }
+
+/* Journey mode */
+.journey-mode .cards-grid { grid-template-columns: 1fr; gap: 8px; }
+.journey-mode .card-wrap,
+.journey-mode .card-inner,
+.journey-mode .card-face { min-height: 80px; }
+.journey-mode .card-front-face {
+  flex-direction: row; align-items: center; gap: 12px; padding: .8rem 1.1rem;
+}
+.journey-mode .card-desc,
+.journey-mode .card-flip-hint { display: none; }
+.journey-mode .card-name { font-size: 15px; margin-bottom: 0; }
+.journey-mode .card-num { top: 50%; transform: translateY(-50%); }
+.journey-mode .card-cat-pill { margin-bottom: 0; flex-shrink: 0; }
+
+/* Solidarity mode */
+.solidarity-mode .card-wrap.sel-card .card-front-face {
+  border: 2px solid var(--c-vision-mid);
+  background: var(--c-vision-bg);
+}
+.solidarity-mode .card-wrap.sel-card .card-name { color: var(--c-vision-text); }
+.solidarity-badge {
+  display: none; position: absolute; top: -8px; right: -8px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--c-vision-mid); color: white;
+  font-size: 11px; font-weight: 600;
+  align-items: center; justify-content: center;
+  z-index: 2;
+}
+.sel-card .solidarity-badge { display: flex; }
+
+/* ─── MODAL ─── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(20,20,18,.5);
+  align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 2rem; width: 100%; max-width: 520px;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.15);
+}
+.modal h2 {
+  font-family: var(--ff-display); font-size: 22px; font-weight: 400;
+  margin-bottom: 1.25rem; color: var(--ink);
+}
+.form-row { margin-bottom: 1rem; }
+.form-row label {
+  display: block; font-size: 12px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 6px;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%; font-family: var(--ff-body); font-size: 14px;
+  padding: 9px 12px; border: 1px solid var(--surface-3);
+  border-radius: 7px; background: var(--surface);
+  color: var(--ink); outline: none;
+  transition: border-color .15s;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus { border-color: var(--ink-3); }
+.form-row textarea { resize: vertical; min-height: 80px; }
+.modal-footer {
+  display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.5rem;
+  padding-top: 1rem; border-top: 1px solid var(--surface-3);
+}
+
+/* ─── PRINT PANEL ─── */
+.print-panel {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(20,20,18,.5);
+  align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.print-panel.open { display: flex; }
+.print-box {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 2rem; width: 100%; max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.15);
+}
+.print-box h2 {
+  font-family: var(--ff-display); font-size: 22px; font-weight: 400;
+  margin-bottom: .4rem;
+}
+.print-box p { font-size: 13px; color: var(--ink-2); margin-bottom: 1.5rem; line-height: 1.55; }
+.size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
+.size-card {
+  border: 1.5px solid var(--surface-3); border-radius: 10px;
+  padding: .9rem 1rem; cursor: pointer; transition: all .15s; text-align: center;
+}
+.size-card:hover { border-color: var(--ink-3); }
+.size-card.selected { border-color: var(--ink); background: var(--surface-2); }
+.size-card .size-name { font-weight: 600; font-size: 14px; display: block; margin-bottom: 4px; }
+.size-card .size-dims { font-size: 12px; color: var(--ink-3); }
+.size-card .size-icon {
+  width: 40px; height: auto; margin: 0 auto .5rem;
+  display: flex; align-items: flex-end; justify-content: center; gap: 4px;
+}
+.size-icon .rect-a5 {
+  width: 24px; height: 34px; border: 2px solid var(--ink-3);
+  border-radius: 2px; background: var(--surface-2);
+}
+.size-icon .rect-a6 {
+  width: 18px; height: 25px; border: 2px solid var(--ink-3);
+  border-radius: 2px; background: var(--surface-2);
+}
+.print-opts { margin-bottom: 1.5rem; }
+.print-opts label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--ink-2); cursor: pointer; margin-bottom: 8px;
+}
+.print-opts input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; }
+.print-footer { display: flex; justify-content: flex-end; gap: 8px; padding-top: 1rem; border-top: 1px solid var(--surface-3); }
+
+/* ─── COUNT BAR ─── */
+.count-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.count-text { font-size: 13px; color: var(--ink-3); }
+.solidarity-count { color: var(--c-vision-mid); font-weight: 600; }
+
+/* ─── EMPTY STATE ─── */
+.empty { text-align: center; padding: 4rem 1rem; color: var(--ink-3); }
+.empty svg { width: 40px; height: 40px; margin-bottom: 1rem; opacity: .4; }
+
+/* ─── FOOTER ─── */
+.site-footer {
+  margin-top: 4rem; padding: 1.5rem 2rem;
+  border-top: 1px solid var(--surface-3);
+  font-size: 12px; color: var(--ink-3); text-align: center;
+}
+.site-footer a { color: var(--ink-3); }
+
+/* ─── PRINT STYLES ─── */
+@media print {
+  body * { visibility: hidden !important; }
+  #print-area, #print-area * { visibility: visible !important; }
+  #print-area { position: fixed; inset: 0; z-index: 9999; background: white; }
+
+  .print-page {
+    page-break-after: always;
+    display: flex !important;
+    flex-direction: column;
+  }
+  .print-page:last-child { page-break-after: auto; }
+}
+
+#print-area { display: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .main-wrap { padding: 1rem 1rem 3rem; }
+  .header-inner { padding: 0; }
+  .site-header { padding: 0 1rem; }
+  .logo-sub { display: none; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .controls { flex-direction: column; align-items: stretch; }
+  .controls-right { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a class="logo" href="#" aria-label="Immersive Event Planning Deck home">
+      <span class="logo-title">Immersive Event Planning Deck</span>
+      <span class="logo-sub">Film Hub Midlands</span>
+    </a>
+    <div class="header-actions">
+      <button class="btn btn-ghost" onclick="openPrintPanel()" title="Print / save as PDF">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / PDF
+      </button>
+      <button class="btn btn-primary" onclick="openAddCard()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add card
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main-wrap" id="main">
+
+  <div class="hero">
+    <h1>Immersive Event<br><em>Planning Deck</em></h1>
+    <div class="hero-meta">
+      <span>A BFI Film Audience Network resource</span>
+      <span class="dot">·</span>
+      <a href="https://filmhubmidlands.org/show/exhibitor-resources/broader-screen-content/" target="_blank" rel="noopener">Film Hub Midlands</a>
+      <span class="dot">·</span>
+      <span>Broader Screen Content</span>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls" id="controls">
+    <div class="controls-left" id="cat-filters" role="group" aria-label="Filter by category"></div>
+    <div class="controls-right">
+      <div class="mode-tabs" role="group" aria-label="Display mode">
+        <button class="mode-tab active" data-mode="browse" onclick="setMode('browse')">Browse</button>
+        <button class="mode-tab" data-mode="journey" onclick="setMode('journey')">Journey map</button>
+        <button class="mode-tab" data-mode="solidarity" onclick="setMode('solidarity')">Solidarity round</button>
+      </div>
+      <button class="btn btn-ghost btn-icon" onclick="shuffle()" title="Shuffle cards" aria-label="Shuffle cards">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <p class="mode-hint" id="mode-hint">Click any card to flip it and reveal the key question and prompts. Hover a card to edit or delete it.</p>
+
+  <div class="count-bar">
+    <span class="count-text" id="count-text"></span>
+  </div>
+
+  <div class="cards-grid" id="cards-grid" role="list" aria-live="polite"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p>Immersive Event Planning Deck — a resource by <a href="https://filmhubmidlands.org" target="_blank" rel="noopener">Film Hub Midlands</a> in partnership with <a href="https://nearnow.org.uk/" target="_blank" rel="noopener">Near Now</a>. Supported by the BFI Film Audience Network.</p>
+</footer>
+
+<!-- ADD / EDIT CARD MODAL -->
+<div class="modal-overlay" id="card-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" role="document">
+    <h2 id="modal-title">Add new card</h2>
+    <input type="hidden" id="edit-id">
+    <div class="form-row">
+      <label for="f-name">Card name</label>
+      <input type="text" id="f-name" placeholder="e.g. Sound design">
+    </div>
+    <div class="form-row">
+      <label for="f-cat">Category</label>
+      <select id="f-cat">
+        <option value="vision">Vision &amp; concept</option>
+        <option value="space">Space &amp; atmosphere</option>
+        <option value="audience">Audience</option>
+        <option value="ops">Operations</option>
+        <option value="marketing">Marketing &amp; comms</option>
+        <option value="risk">Risk &amp; quality</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="f-desc">Description (front of card)</label>
+      <textarea id="f-desc" placeholder="Brief description of what this card covers…" rows="3"></textarea>
+    </div>
+    <div class="form-row">
+      <label for="f-q">Key question (back of card)</label>
+      <textarea id="f-q" placeholder="The main question to prompt discussion…" rows="2"></textarea>
+    </div>
+    <div class="form-row">
+      <label for="f-prompts">Prompts (back of card)</label>
+      <textarea id="f-prompts" placeholder="Comma-separated prompts or bullet-style notes…" rows="3"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCard()">Save card</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT PANEL -->
+<div class="print-panel" id="print-panel" role="dialog" aria-modal="true" aria-labelledby="print-title">
+  <div class="print-box">
+    <h2 id="print-title">Print cards</h2>
+    <p>Print all cards (including any you've added or edited) or just the filtered selection. Use your browser's <strong>Print to PDF</strong> option to save a PDF file.</p>
+
+    <div class="size-grid">
+      <div class="size-card selected" id="sz-a5" onclick="selectSize('a5')">
+        <div class="size-icon"><div class="rect-a5"></div></div>
+        <span class="size-name">A5</span>
+        <span class="size-dims">148 × 210 mm</span>
+      </div>
+      <div class="size-card" id="sz-a6" onclick="selectSize('a6')">
+        <div class="size-icon"><div class="rect-a6"></div></div>
+        <span class="size-name">A6</span>
+        <span class="size-dims">105 × 148 mm</span>
+      </div>
+    </div>
+
+    <div class="print-opts">
+      <label><input type="checkbox" id="po-both" checked> Print both front &amp; back</label>
+      <label><input type="checkbox" id="po-filtered"> Print filtered selection only</label>
+      <label><input type="checkbox" id="po-colour" checked> Colour category pills</label>
+    </div>
+
+    <div class="print-footer">
+      <button class="btn btn-ghost" onclick="closePrintPanel()">Cancel</button>
+      <button class="btn btn-primary" onclick="doPrint()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Open print dialog
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT AREA (injected at print time) -->
+<div id="print-area"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATA — edit card content here or via the UI
+   ═══════════════════════════════════════════════════════════ */
+const CATEGORIES = {
+  vision:    'Vision & concept',
+  space:     'Space & atmosphere',
+  audience:  'Audience',
+  ops:       'Operations',
+  marketing: 'Marketing & comms',
+  risk:      'Risk & quality',
+};
+
+/* To add a new card: copy the pattern below, give it a unique id,
+   set the cat to one of the CATEGORIES keys, and fill name/desc/q/prompts. */
+const DEFAULT_CARDS = [
+  // VISION & CONCEPT
+  { id:1, cat:'vision', name:'Event vision',
+    desc:'What\'s the core idea or experience? Summarise the event in 1–2 sentences.',
+    q:'Why this event, and why now? Does it have a specific purpose or goal?',
+    prompts:'Think about intended impact, the artist\'s intent, and how this fits your programme.' },
+  // SPACE & ATMOSPHERE
+  { id:2, cat:'space', name:'Venue and space',
+    desc:'Where is the event taking place? Consider room setup, lighting, Wi-Fi, layout, accessibility, power, privacy, and flow.',
+    q:'Does the space shape the experience, or does the experience need a specific space? What needs must the venue meet?',
+    prompts:'Room dimensions, ceiling height, blackout capability, power access, noise bleed from adjacent spaces.' },
+  { id:3, cat:'space', name:'Atmosphere',
+    desc:'What environment do you want to create? Consider lighting, sound, props, staging, and set-design elements.',
+    q:'How can you enhance the experience by setting the mood and atmosphere?',
+    prompts:'Ambient sound, temperature, colour temperature of lighting, pre-show music or visuals, scent.' },
+  // OPERATIONS
+  { id:4, cat:'ops', name:'Duration and schedule',
+    desc:'How long will it run? One-off, multi-day, or recurring? Consider sessions, timekeeping, and audience turnover.',
+    q:'What works best for audience and staff?',
+    prompts:'Session length, gap between sessions, total run time, whether the experience loops or is fixed-duration.' },
+  { id:5, cat:'ops', name:'Materials and tech resources',
+    desc:'What equipment and tools are needed? Headsets, tablets, controllers, PA system, extension leads, signage, print materials.',
+    q:'Where can you borrow, rent, or partner to access what you need?',
+    prompts:'Equipment checklist, lead times for hire or purchase, compatibility across devices, backup kit.' },
+  { id:6, cat:'ops', name:'Management of kit',
+    desc:'How is equipment maintained? Set up, powered, switched off, stored, updated, and charged.',
+    q:'Who will manage these aspects?',
+    prompts:'Pre-show boot checklist, mid-session monitoring, end-of-day shutdown, charging schedule, firmware updates.' },
+  { id:7, cat:'ops', name:'Staffing and training',
+    desc:'Who makes it run? FOH staff, invigilators, technicians, facilitators. Training may be needed.',
+    q:'Do you need specialist roles, or can you adapt existing staff capacity?',
+    prompts:'Briefing documents, technical run-throughs, escalation paths for tech issues, first-aid and wellbeing.' },
+  { id:8, cat:'ops', name:'Roles and responsibilities',
+    desc:'How do you divide tasks within your team? Planning, tech, FOH, marketing.',
+    q:'What staff resource do you have? What might you need to delegate or buy in?',
+    prompts:'RACI table or simple owner list. Clarity on who can authorise decisions on the day.' },
+  { id:9, cat:'ops', name:'Budget',
+    desc:'What will it cost? Staffing, equipment, licensing, venue hire, marketing, refreshments.',
+    q:'What\'s flexible and what\'s fixed in your budget?',
+    prompts:'Contingency percentage, revenue vs. cost model, in-kind contributions, funder reporting requirements.' },
+  { id:10, cat:'ops', name:'Ticketing and pricing',
+    desc:'How do people book and pay? Venue systems, online platforms, pricing models, cancellation policy.',
+    q:'How do you balance accessibility, risk, and sustainability?',
+    prompts:'Timed entry, free vs. paid, concessions, group bookings, refund policy.' },
+  { id:11, cat:'ops', name:'Documentation',
+    desc:'How will you record the event? Photos, video, written reflection.',
+    q:'Who is this documentation for — funders, artists, community, or future planning?',
+    prompts:'Rights clearance for recording, designated photographer/videographer, debrief report template.' },
+  { id:12, cat:'ops', name:'Feedback and evaluation',
+    desc:'How will you learn from audiences? Feedback forms, conversations, digital tools.',
+    q:'What data would help you design the next event better?',
+    prompts:'Survey design, collection method, analysis plan, who receives the report.' },
+  { id:13, cat:'ops', name:'Introduction',
+    desc:'How do you start the event? Consider the welcome, briefing, and how audiences are onboarded into the experience.',
+    q:'What do audiences need to know or feel before the experience begins?',
+    prompts:'Welcome script, safety briefing, content warnings, controller tutorial, tone-setting.' },
+  { id:14, cat:'ops', name:'Ending',
+    desc:'How does the event wrap up? Consider the transition out of the experience and how audiences are supported afterwards.',
+    q:'How do you leave audiences feeling after the experience?',
+    prompts:'Decompression time, exit script, reflection space, further information about the work.' },
+  { id:15, cat:'ops', name:'Breaks',
+    desc:'Are there pauses built into the event? Rest moments allow audiences to recover and have conversations.',
+    q:'When are rest and reflection moments most needed — for audiences and for staff?',
+    prompts:'Duration of breaks, staff rotation, refreshments, informal Q&A moments, pacing rhythm.' },
+  { id:16, cat:'ops', name:'Packing up',
+    desc:'How is equipment switched off, stored, updated, charged, and maintained at the end of each session or run?',
+    q:'Who is responsible for end-of-event wrap-up, and how long does it take?',
+    prompts:'Shutdown checklist, kit storage location, data backup, return of hired equipment.' },
+  { id:17, cat:'ops', name:'Power',
+    desc:'How is equipment kept sufficiently powered throughout the event?',
+    q:'Do you have enough power points, battery capacity, and charging time between sessions?',
+    prompts:'Power draw per device, extension lead routes, battery life vs. session length, spare batteries or charging hubs.' },
+  // AUDIENCE
+  { id:18, cat:'audience', name:'Audience focus',
+    desc:'Who are you trying to reach? Be specific about age groups, interests, and existing vs. new audiences.',
+    q:'How does immersive work expand or complement your venue\'s current audience?',
+    prompts:'Personas, cultural relevance, language, prior experience with VR/immersive tech.' },
+  { id:19, cat:'audience', name:'Audience capacity and flow',
+    desc:'How many people can experience the event? Consider technical limitations, headset numbers, staff, and space.',
+    q:'How do you maximise access while preserving quality of experience?',
+    prompts:'Throughput calculation, queueing strategy, timed tickets, walk-up capacity.' },
+  { id:20, cat:'audience', name:'Age and content',
+    desc:'Are there restrictions or warnings? Consider BBFC ratings, developer guidance, and content themes.',
+    q:'Is the content appropriate for the audience you are trying to reach?',
+    prompts:'Age ratings, content warnings, parental guidance, age verification at the door.' },
+  { id:21, cat:'audience', name:'Audience needs',
+    desc:'Is the event inclusive and accessible? Consider health conditions, sensory needs, subtitles, and multiple languages.',
+    q:'How can you prepare audiences to feel safe and welcome?',
+    prompts:'VR sickness risk, mobility access, audio descriptions, sensory-friendly sessions, carer tickets.' },
+  { id:22, cat:'audience', name:'Information and communication',
+    desc:'What do audiences need to know before, during, and after the event? Content warnings, instructions, onboarding.',
+    q:'How much guidance is too much — and how much is not enough?',
+    prompts:'Pre-visit email, on-site signage, verbal briefings, post-experience follow-up.' },
+  { id:23, cat:'audience', name:'Audience experience',
+    desc:'What does participation feel like? Seating, standing, waiting, moving, solo or communal, synchronous or not.',
+    q:'How do you create a smooth and memorable experience?',
+    prompts:'Comfort, duration on feet, transitions between zones, emotional arc of the piece.' },
+  { id:24, cat:'audience', name:'Audience interactivity',
+    desc:'Is the experience passive or interactive? Controls, agency, and participation.',
+    q:'How can you make clear what is expected of audiences?',
+    prompts:'Affordances, controller tutorials, invigilator prompts, passive vs. active choices.' },
+  { id:25, cat:'audience', name:'Synchronous or solo?',
+    desc:'Is the experience synchronised for all audience members? Is there collaboration, or is it a solo journey?',
+    q:'What are the implications for timing, staffing, and the social feel of the event?',
+    prompts:'Shared vs. individual headsets, simultaneous start times, multiplayer considerations.' },
+  { id:26, cat:'audience', name:'Managing distractions',
+    desc:'What could distract audiences? Being watched, sound bleed, mobile phones.',
+    q:'How will distractions be handled or mitigated?',
+    prompts:'Acoustic treatment, mobile phone policy, sightlines, queuing noise, staff positioning.' },
+  { id:27, cat:'audience', name:'Questions from audiences',
+    desc:'How do you handle anticipated audience questions before, during, and after the experience?',
+    q:'What do you expect audiences to ask — and who answers?',
+    prompts:'FAQ briefing for staff, on-site materials, post-show Q&A with artist, online resources.' },
+  { id:28, cat:'audience', name:'Community building',
+    desc:'What happens after the event? Mailing lists, follow-up, opportunities for participants to join a community.',
+    q:'How do you turn one-time audiences into an ongoing network?',
+    prompts:'Post-event social, newsletter sign-up, Q&A or artist talk, alumni programme.' },
+  { id:29, cat:'audience', name:'Onboarding and offboarding',
+    desc:'How do you prepare and support audiences before and after the event? Quiet space, storing belongings, reflection area.',
+    q:'How do you care for audiences around the main experience?',
+    prompts:'Welcome zone, belongings storage, decompression area, water, staff presence after exit.' },
+  { id:30, cat:'audience', name:'Language',
+    desc:'Does the experience support multiple languages? Are subtitles or translated materials available?',
+    q:'Which languages do your target audiences speak — and how does the content serve them?',
+    prompts:'Subtitle options, translated printed guides, staff language skills, audio description.' },
+  // MARKETING & COMMS
+  { id:31, cat:'marketing', name:'Marketing and communication',
+    desc:'How do you tell the story of your event? Titles, descriptions, imagery, social media, press, style guides.',
+    q:'How do you make immersive work legible and appealing to new audiences?',
+    prompts:'Plain-English description, avoiding jargon, choosing the right image or video asset.' },
+  { id:32, cat:'marketing', name:'Marketing profile',
+    desc:'Where does the event feature on your website? What does it sit alongside — film programme, gallery, other?',
+    q:'How can you ensure your event is given equal footing?',
+    prompts:'Taxonomy on your site, email list segment, social channel choice, listing partners.' },
+  { id:33, cat:'marketing', name:'Creator and credits',
+    desc:'Who made the work? Artist, studio, or collective? Correct naming and credits matter.',
+    q:'How do you highlight artists and collaborators appropriately?',
+    prompts:'Contractual credit obligations, bio text, pronouns, links to artist website, co-commissioners.' },
+  // RISK & QUALITY
+  { id:34, cat:'risk', name:'Quality control',
+    desc:'Who needs to experience the work prior to showcasing? Marketing, ushers, programme team.',
+    q:'Do you need specialist advice to assess quality, suitability, and content?',
+    prompts:'Preview sessions, accessibility audit, technical sign-off, artist sign-off.' },
+  { id:35, cat:'risk', name:'Risk taking',
+    desc:'Do you have permission to try something and maybe fail? Consider free test events or pay-what-you-can.',
+    q:'What would be the benefit of a test event? Do you have capacity for that?',
+    prompts:'Pilot audience, feedback loop, iterative improvement before full public launch.' },
+  { id:36, cat:'risk', name:'Success',
+    desc:'How are you measuring success? Audience numbers, ticket sales, positive feedback, new subscribers.',
+    q:'What does success look like for you and your event?',
+    prompts:'Quantitative targets (numbers, revenue), qualitative measures (feedback themes, press coverage).' },
+  { id:37, cat:'risk', name:'Challenges',
+    desc:'What might hinder your event? Time, budget, expertise, access to artworks or kit, licensing restrictions.',
+    q:'What mitigations can you make?',
+    prompts:'Risk register, mitigation actions, contingency plans, escalation contacts.' },
+  { id:38, cat:'risk', name:'Health and safety',
+    desc:'What additional risk factors might you need to consider? VR sickness, disorientation, low lighting, trip hazards.',
+    q:'Do you need a specific risk assessment for this activity?',
+    prompts:'Formal risk assessment, first-aider on site, signage for trip hazards, staff briefing on VR sickness symptoms.' },
+  { id:39, cat:'risk', name:'Watching',
+    desc:'Who needs to experience the work before it opens to the public? Who watches, tests, and checks it?',
+    q:'Have all key roles — marketing, FOH, technical — experienced the work themselves?',
+    prompts:'Internal preview, invited test audience, stakeholder screenings, artist sign-off.' },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════════════════════ */
+let cards = loadCards();
+let activeCat = 'all';
+let activeMode = 'browse';
+let flippedIds = new Set();
+let solidarityIds = new Set();
+let nextId = Math.max(...cards.map(c=>c.id)) + 1;
+let printSize = 'a5';
+
+function loadCards() {
+  try {
+    const saved = localStorage.getItem('imm-deck-cards');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return DEFAULT_CARDS.map(c => ({...c}));
+}
+function saveCards() {
+  try { localStorage.setItem('imm-deck-cards', JSON.stringify(cards)); } catch(e) {}
+}
+function resetToDefaults() {
+  if (!confirm('Reset all cards to the original defaults? Any edits or new cards will be lost.')) return;
+  localStorage.removeItem('imm-deck-cards');
+  cards = DEFAULT_CARDS.map(c => ({...c}));
+  nextId = Math.max(...cards.map(c=>c.id)) + 1;
+  flippedIds.clear(); solidarityIds.clear();
+  renderAll();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FILTERS & MODES
+   ═══════════════════════════════════════════════════════════ */
+function getFiltered() {
+  return activeCat === 'all' ? [...cards] : cards.filter(c=>c.cat===activeCat);
+}
+
+function buildFilters() {
+  const bar = document.getElementById('cat-filters');
+  const total = cards.length;
+  let html = `<button class="cat-filter ${activeCat==='all'?'active-all':''}" onclick="filterCat('all')">All (${total})</button>`;
+  for (const [k,v] of Object.entries(CATEGORIES)) {
+    const n = cards.filter(c=>c.cat===k).length;
+    html += `<button class="cat-filter ${activeCat===k?'active-'+k:''}" onclick="filterCat('${k}')">${v} (${n})</button>`;
+  }
+  bar.innerHTML = html;
+}
+
+function filterCat(cat) {
+  activeCat = cat;
+  flippedIds.clear(); solidarityIds.clear();
+  renderAll();
+}
+
+const MODE_HINTS = {
+  browse: 'Click any card to flip it and reveal the key question and prompts. Hover a card to edit or delete it.',
+  journey: 'Arrange cards in the order of your planning process. Discuss blockers at each stage. Click to flip.',
+  solidarity: 'Each venue selects 2–3 "most difficult" cards to share pain points. Tap to select (max 3).',
+};
+
+function setMode(mode) {
+  activeMode = mode;
+  flippedIds.clear(); solidarityIds.clear();
+  document.querySelectorAll('.mode-tab').forEach(b=>b.classList.toggle('active', b.dataset.mode===mode));
+  document.getElementById('mode-hint').textContent = MODE_HINTS[mode];
+  const main = document.getElementById('main');
+  main.className = 'main-wrap ' + (mode !== 'browse' ? mode + '-mode' : '');
+  renderCards();
+}
+
+function shuffle() {
+  const filtered = getFiltered();
+  filtered.sort(()=>Math.random()-.5);
+  // reorder within full array preserving non-filtered
+  const filteredIds = new Set(filtered.map(c=>c.id));
+  const others = cards.filter(c=>!filteredIds.has(c.id));
+  cards = [...filtered, ...others];
+  flippedIds.clear(); solidarityIds.clear();
+  renderCards();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER
+   ═══════════════════════════════════════════════════════════ */
+function renderAll() {
+  buildFilters();
+  renderCards();
+}
+
+function renderCards() {
+  const grid = document.getElementById('cards-grid');
+  const filtered = getFiltered();
+  const countEl = document.getElementById('count-text');
+
+  if (activeMode === 'solidarity') {
+    countEl.innerHTML = `${filtered.length} cards &nbsp;·&nbsp; <span class="solidarity-count">${solidarityIds.size}/3 selected</span>`;
+  } else {
+    countEl.textContent = `${filtered.length} card${filtered.length !== 1 ? 's' : ''}`;
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><p>No cards in this category yet.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((c, i) => cardHTML(c, i)).join('');
+}
+
+function catPillClass(cat) {
+  return 'pill-' + cat;
+}
+
+function cardHTML(c, i) {
+  const isFlipped = flippedIds.has(c.id);
+  const isSel = solidarityIds.has(c.id);
+  const selClass = activeMode === 'solidarity' && isSel ? 'sel-card' : '';
+
+  const flipIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
+
+  return `<div class="card-wrap ${isFlipped?'flipped':''} ${selClass}" role="listitem"
+    data-id="${c.id}" onclick="cardClick(${c.id})">
+    <div class="solidarity-badge" aria-hidden="true">${[...solidarityIds].indexOf(c.id)+1||''}</div>
+    <div class="card-inner">
+      <div class="card-face card-front-face">
+        <span class="card-num" aria-hidden="true">${String(i+1).padStart(2,'0')}</span>
+        <span class="card-cat-pill ${catPillClass(c.cat)}">${CATEGORIES[c.cat]}</span>
+        <p class="card-name">${esc(c.name)}</p>
+        <p class="card-desc">${esc(c.desc)}</p>
+        <p class="card-flip-hint">${flipIcon} Tap to flip</p>
+      </div>
+      <div class="card-face card-back-face">
+        <span class="card-cat-pill ${catPillClass(c.cat)}">${CATEGORIES[c.cat]}</span>
+        <p class="back-section-label">Key question</p>
+        <p class="back-question">${esc(c.q)}</p>
+        <p class="back-section-label">Prompts</p>
+        <p class="back-prompts">${esc(c.prompts)}</p>
+        <button class="back-flip-back" onclick="event.stopPropagation();flipBack(${c.id})">
+          ${flipIcon} Flip back
+        </button>
+      </div>
+    </div>
+    <div class="card-actions" onclick="event.stopPropagation()">
+      <button class="btn btn-ghost" style="font-size:12px;padding:5px 12px" onclick="openEditCard(${c.id})">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Edit
+      </button>
+      <button class="btn btn-danger" style="font-size:12px;padding:5px 12px" onclick="deleteCard(${c.id})">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        Delete
+      </button>
+    </div>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD INTERACTIONS
+   ═══════════════════════════════════════════════════════════ */
+function cardClick(id) {
+  if (activeMode === 'solidarity') {
+    if (solidarityIds.has(id)) { solidarityIds.delete(id); }
+    else if (solidarityIds.size < 3) { solidarityIds.add(id); }
+    else return;
+    renderCards(); return;
+  }
+  if (flippedIds.has(id)) flippedIds.delete(id);
+  else flippedIds.add(id);
+  const el = document.querySelector(`.card-wrap[data-id="${id}"]`);
+  if (el) el.classList.toggle('flipped', flippedIds.has(id));
+  document.getElementById('count-text').textContent = getFiltered().length + ' card' + (getFiltered().length !== 1 ? 's' : '');
+}
+function flipBack(id) {
+  flippedIds.delete(id);
+  const el = document.querySelector(`.card-wrap[data-id="${id}"]`);
+  if (el) el.classList.remove('flipped');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ADD / EDIT / DELETE
+   ═══════════════════════════════════════════════════════════ */
+function openAddCard() {
+  document.getElementById('modal-title').textContent = 'Add new card';
+  document.getElementById('edit-id').value = '';
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-cat').value = 'ops';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-q').value = '';
+  document.getElementById('f-prompts').value = '';
+  document.getElementById('card-modal').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+function openEditCard(id) {
+  const c = cards.find(x=>x.id===id);
+  if (!c) return;
+  document.getElementById('modal-title').textContent = 'Edit card';
+  document.getElementById('edit-id').value = id;
+  document.getElementById('f-name').value = c.name;
+  document.getElementById('f-cat').value = c.cat;
+  document.getElementById('f-desc').value = c.desc;
+  document.getElementById('f-q').value = c.q;
+  document.getElementById('f-prompts').value = c.prompts;
+  document.getElementById('card-modal').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+function closeModal() {
+  document.getElementById('card-modal').classList.remove('open');
+}
+function saveCard() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('Please enter a card name.'); return; }
+  const id = document.getElementById('edit-id').value;
+  const data = {
+    name,
+    cat: document.getElementById('f-cat').value,
+    desc: document.getElementById('f-desc').value.trim(),
+    q: document.getElementById('f-q').value.trim(),
+    prompts: document.getElementById('f-prompts').value.trim(),
+  };
+  if (id) {
+    const idx = cards.findIndex(c=>c.id===+id);
+    if (idx > -1) cards[idx] = {...cards[idx], ...data};
+  } else {
+    cards.push({id: nextId++, ...data});
+  }
+  saveCards();
+  closeModal();
+  renderAll();
+}
+function deleteCard(id) {
+  const c = cards.find(x=>x.id===id);
+  if (!confirm(`Delete the card "${c?.name}"? This cannot be undone.`)) return;
+  cards = cards.filter(x=>x.id!==id);
+  flippedIds.delete(id); solidarityIds.delete(id);
+  saveCards();
+  renderAll();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KEYBOARD ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════ */
+document.getElementById('card-modal').addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+document.getElementById('print-panel').addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePrintPanel();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════════════════════════ */
+function openPrintPanel() {
+  document.getElementById('print-panel').classList.add('open');
+}
+function closePrintPanel() {
+  document.getElementById('print-panel').classList.remove('open');
+}
+function selectSize(s) {
+  printSize = s;
+  document.getElementById('sz-a5').classList.toggle('selected', s==='a5');
+  document.getElementById('sz-a6').classList.toggle('selected', s==='a6');
+}
+
+function doPrint() {
+  const bothSides = document.getElementById('po-both').checked;
+  const filteredOnly = document.getElementById('po-filtered').checked;
+  const colour = document.getElementById('po-colour').checked;
+  const toPrint = filteredOnly ? getFiltered() : cards;
+  const isA6 = printSize === 'a6';
+
+  // Dimensions in mm for @page rule
+  const pw = isA6 ? '105mm' : '148mm';
+  const ph = isA6 ? '148mm' : '210mm';
+
+  // Category colours for print
+  const catColours = {
+    vision:    { bg:'#eeedfe', text:'#3c3489', pill:'#534ab7' },
+    space:     { bg:'#e1f5ee', text:'#085041', pill:'#0f6e56' },
+    audience:  { bg:'#faece7', text:'#712b13', pill:'#993c1d' },
+    ops:       { bg:'#e6f1fb', text:'#0c447c', pill:'#185fa5' },
+    marketing: { bg:'#fbeaf0', text:'#72243e', pill:'#993556' },
+    risk:      { bg:'#faeeda', text:'#633806', pill:'#854f0b' },
+  };
+
+  function pillStyle(cat) {
+    if (!colour) return 'background:#f0efea;color:#4a4a46;';
+    const c = catColours[cat];
+    return `background:${c.bg};color:${c.text};`;
+  }
+  function pillBorder(cat) {
+    if (!colour) return '#b8b8b0';
+    return catColours[cat].pill;
+  }
+
+  let pages = '';
+  toPrint.forEach((c, i) => {
+    // FRONT
+    pages += `<div class="pp" style="
+      width:${pw}; height:${ph};
+      padding: ${isA6?'12px 14px':'18px 20px'};
+      box-sizing:border-box;
+      page-break-after:always;
+      background:#ffffff;
+      border: 0.5px solid #ddd;
+      font-family: Georgia, 'Times New Roman', serif;
+      display:flex; flex-direction:column; position:relative;
+    ">
+      <span style="position:absolute;top:${isA6?'10px':'14px'};right:${isA6?'12px':'16px'};font-size:${isA6?'9px':'10px'};color:#b0b0a8;font-family:Arial,sans-serif;font-weight:600;">
+        ${String(i+1).padStart(2,'0')}
+      </span>
+      <span style="display:inline-block;font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:${isA6?'2px 7px':'3px 9px'};border-radius:20px;margin-bottom:${isA6?'8px':'12px'};width:fit-content;${pillStyle(c.cat)}">
+        ${CATEGORIES[c.cat]}
+      </span>
+      <p style="font-size:${isA6?'15px':'20px'};font-weight:400;color:#1a1a18;margin-bottom:${isA6?'6px':'10px'};line-height:1.2;font-family:Georgia,serif;">
+        ${esc(c.name)}
+      </p>
+      <p style="font-size:${isA6?'10px':'12px'};color:#4a4a46;line-height:1.55;font-family:Arial,sans-serif;flex:1;">
+        ${esc(c.desc)}
+      </p>
+      <div style="margin-top:auto;padding-top:8px;border-top:0.5px solid #e8e5de;">
+        <p style="font-size:${isA6?'8px':'9px'};color:#b0b0a8;font-family:Arial,sans-serif;letter-spacing:.03em;">
+          Immersive Event Planning Deck · Film Hub Midlands
+        </p>
+      </div>
+    </div>`;
+
+    // BACK (if both sides selected)
+    if (bothSides) {
+      pages += `<div class="pp" style="
+        width:${pw}; height:${ph};
+        padding:${isA6?'12px 14px':'18px 20px'};
+        box-sizing:border-box;
+        page-break-after:always;
+        background:#ffffff;
+        border: 0.5px solid #ddd;
+        font-family:Arial,sans-serif;
+        display:flex; flex-direction:column; position:relative;
+      ">
+        <span style="display:inline-block;font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:${isA6?'2px 7px':'3px 9px'};border-radius:20px;margin-bottom:${isA6?'8px':'12px'};width:fit-content;${pillStyle(c.cat)}">
+          ${esc(c.name)}
+        </span>
+        <p style="font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b0b0a8;margin-bottom:4px;">
+          Key question
+        </p>
+        <p style="font-size:${isA6?'11px':'13px'};font-weight:600;color:#1a1a18;line-height:1.5;margin-bottom:${isA6?'8px':'12px'};">
+          ${esc(c.q)}
+        </p>
+        <p style="font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b0b0a8;margin-bottom:4px;">
+          Prompts
+        </p>
+        <p style="font-size:${isA6?'10px':'12px'};color:#4a4a46;font-style:italic;line-height:1.55;flex:1;">
+          ${esc(c.prompts)}
+        </p>
+        <div style="margin-top:auto;padding-top:8px;border-top:0.5px solid #e8e5de;">
+          <p style="font-size:${isA6?'8px':'9px'};color:#b0b0a8;letter-spacing:.03em;">
+            filmhubmidlands.org · Broader Screen Content
+          </p>
+        </div>
+      </div>`;
+    }
+  });
+
+  const printArea = document.getElementById('print-area');
+  printArea.style.display = 'block';
+  printArea.innerHTML = `
+    <style>
+      @page { size: ${pw} ${ph}; margin: 0; }
+      body { margin: 0; padding: 0; }
+      .pp { display:flex; flex-direction:column; }
+    </style>
+    ${pages}
+  `;
+
+  closePrintPanel();
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      printArea.style.display = 'none';
+      printArea.innerHTML = '';
+    }, 1000);
+  }, 200);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════ */
+renderAll();
+</script>
+
+<!-- Reset-to-defaults link (bottom of page, unobtrusive) -->
+<div style="text-align:center;padding:.75rem;font-size:11px;color:#b8b8b0;">
+  <button onclick="resetToDefaults()" style="background:none;border:none;cursor:pointer;color:#b8b8b0;font-size:11px;font-family:inherit;text-decoration:underline;">Reset all cards to defaults</button>
+</div>
+
+</body>
+</html>
