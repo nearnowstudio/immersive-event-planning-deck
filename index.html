@@ -3,24 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Immersive Event Planning Deck — Film Hub Midlands</title>
+<title>Immersive Event Planner — Film Hub Midlands</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
 /* ─── RESET & BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ff-display: 'DM Serif Display', Georgia, serif;
-  --ff-body: 'DM Sans', system-ui, sans-serif;
+  --ff-display: "Jost", Arial, Helvetica, system-ui, sans-serif;
+  --ff-body: "Jost", Arial, Helvetica, system-ui, sans-serif;
   --ink: #1a1a18;
   --ink-2: #4a4a46;
   --ink-3: #8a8a84;
   --ink-4: #b8b8b0;
-  --surface: #faf9f6;
+  --surface: #ffffff; /* was #faf9f6 */
   --surface-2: #f2f0eb;
   --surface-3: #e8e5de;
   --white: #ffffff;
+  --yellow: #fbb860;
+  --red: #ed5638;
+  --black: #1f1f2b;
   --radius: 10px;
   --radius-lg: 16px;
   /* category colours */
@@ -44,14 +47,14 @@ body {
 /* ─── HEADER ─── */
 .site-header {
   background: var(--white);
-  border-bottom: 1px solid var(--surface-3);
+  border-top: 5px solid var(--yellow);
   padding: 0 2rem;
   position: sticky; top: 0; z-index: 100;
 }
 .header-inner {
   max-width: 1200px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  height: 60px; gap: 1rem;
+  height: 100px; gap: 1rem;
 }
 .logo {
   display: flex; align-items: baseline; gap: 10px; text-decoration: none;
@@ -67,29 +70,30 @@ body {
 
 /* ─── BUTTONS ─── */
 .btn {
-  font-family: var(--ff-body); font-size: 13px; font-weight: 500;
-  padding: 7px 16px; border-radius: 6px; cursor: pointer;
-  border: 1px solid transparent; transition: all .15s; white-space: nowrap;
+  font-family: var(--ff-body); font-size: 13px; font-weight: 600;
+  padding: 7px 16px; border-radius: 0px; cursor: pointer;
+  border: 2px solid transparent; transition: all .15s; white-space: nowrap;
   display: inline-flex; align-items: center; gap: 6px;
 }
 .btn-ghost {
-  background: transparent; border-color: var(--surface-3);
-  color: var(--ink-2);
+  background: var(--yellow); border-color: var(--yellow);
+  color: #000;
 }
-.btn-ghost:hover { background: var(--surface-2); border-color: var(--surface-3); }
+.btn-ghost:hover { background: var(--black); border-color: var(--black); color: var(--white); }
 .btn-primary {
-  background: var(--ink); color: var(--white); border-color: var(--ink);
+  background: var(--ink); color: var(--white); border-color: var(--black);
 }
-.btn-primary:hover { background: var(--ink-2); }
+.btn-primary:hover { background: var(--yellow); color: #000; border-color: var(--yellow); }
 .btn-danger {
-  background: transparent; border-color: #f09595; color: #a32d2d;
+  background: transparent; border-color: var(--yellow); color: var(--yellow);
 }
-.btn-danger:hover { background: #fcebeb; }
+.btn-danger:hover { background: var(--black); border-color: var(--black); color: var(--white); }
 .btn-icon {
-  width: 34px; height: 34px; padding: 0; justify-content: center;
-  background: transparent; border-color: var(--surface-3); color: var(--ink-2);
+  width: 26px; height: 26px; padding: 0; justify-content: center;
+  border: 1px solid var(--black);
+  background: transparent; border-color: var(--black); color: var(--black);
 }
-.btn-icon:hover { background: var(--surface-2); }
+.btn-icon:hover { background: var(--yellow); color: #000; border-color: var(--yellow); }
 
 /* ─── MAIN LAYOUT ─── */
 .main-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem; }
@@ -103,7 +107,7 @@ body {
 .hero h1 {
   font-family: var(--ff-display);
   font-size: clamp(28px, 4vw, 42px);
-  font-weight: 400; line-height: 1.15;
+  font-weight: 600; line-height: 1.15;
   color: var(--ink); margin-bottom: .5rem;
 }
 .hero h1 em { font-style: italic; color: var(--ink-2); }
@@ -127,8 +131,8 @@ body {
 /* Category filter pills */
 .cat-filter {
   font-family: var(--ff-body); font-size: 12px; font-weight: 500;
-  padding: 5px 14px; border-radius: 20px; cursor: pointer;
-  border: 1px solid var(--surface-3);
+  padding: 5px 14px; border-radius: 0px; cursor: pointer;
+  border: 1px solid var(--black);
   background: var(--white); color: var(--ink-2);
   transition: all .15s;
 }
@@ -142,24 +146,25 @@ body {
 
 /* Mode tabs */
 .mode-tabs {
-  display: flex; gap: 0; background: var(--surface-2);
-  border-radius: 8px; padding: 3px;
+  display: flex; gap: 0; background: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 0px; padding: 0px;
 }
 .mode-tab {
   font-family: var(--ff-body); font-size: 12px; font-weight: 500;
-  padding: 5px 14px; border-radius: 6px; cursor: pointer;
-  border: none; background: transparent; color: var(--ink-3);
+  padding: 5px 14px; border-radius: 0px; cursor: pointer;
+  border: none; background: var(--white); color: var(--ink-2); /* transparent; color: var(--ink-3) */
   transition: all .15s;
 }
 .mode-tab.active {
-  background: var(--white); color: var(--ink);
+  background: var(--black); color: var(--white);
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
 
 .mode-hint {
-  font-size: 12px; color: var(--ink-3);
-  padding: .5rem .75rem; background: var(--surface-2);
-  border-radius: 6px; margin-bottom: 1rem;
+  font-size: 12px; color: var(--ink-1);
+  padding: .5rem .75rem; background: var(--yellow);
+  border-radius: 0px; margin-bottom: 1rem;
 }
 
 /* ─── CARD GRID ─── */
@@ -171,10 +176,10 @@ body {
 
 /* ─── FLIP CARD ─── */
 .card-wrap {
-  perspective: 1000px; min-height: 210px; cursor: pointer;
+  perspective: 1000px; min-height: 300px; cursor: pointer;
 }
 .card-inner {
-  position: relative; width: 100%; min-height: 210px;
+  position: relative; width: 100%; min-height: 300px;
   transition: transform .5s cubic-bezier(.4,0,.2,1);
   transform-style: preserve-3d;
 }
@@ -183,8 +188,8 @@ body {
 .card-face {
   position: absolute; inset: 0; min-height: 210px;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  border-radius: var(--radius-lg); padding: 1.2rem 1.3rem;
-  border: 1px solid var(--surface-3);
+  border-radius: 0px; padding: 1.2rem 1.3rem; /* var(--radius-lg); padding: 1.2rem 1.3rem; */
+  border: 1px solid var(--ink-3);
   display: flex; flex-direction: column;
 }
 .card-back-face { transform: rotateY(180deg); background: var(--white); }
@@ -192,12 +197,12 @@ body {
 
 .card-num {
   position: absolute; top: 1rem; right: 1.2rem;
-  font-size: 11px; color: var(--ink-4); font-weight: 500;
+  font-size: 11px; color: var(--ink-3); font-weight: 500;
 }
 .card-cat-pill {
   display: inline-block; font-size: 10px; font-weight: 600;
   letter-spacing: .05em; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 20px; margin-bottom: .7rem;
+  padding: 3px 10px; border-radius: 0px; margin-bottom: .7rem;
   width: fit-content;
 }
 .pill-vision    { background: var(--c-vision-bg);    color: var(--c-vision-text); }
@@ -244,26 +249,12 @@ body {
 .card-actions {
   display: none; position: absolute; bottom: 0; left: 0; right: 0;
   padding: 8px 10px;
-  background: linear-gradient(transparent, rgba(255,255,255,.95) 40%);
+  <!-- /* background: linear-gradient(transparent, rgba(255,255,255,.95) 40%); */ -->
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   justify-content: flex-end; gap: 6px;
 }
 .card-wrap:hover .card-actions { display: flex; }
 .card-wrap.flipped .card-actions { display: none !important; }
-
-/* Journey mode */
-.journey-mode .cards-grid { grid-template-columns: 1fr; gap: 8px; }
-.journey-mode .card-wrap,
-.journey-mode .card-inner,
-.journey-mode .card-face { min-height: 80px; }
-.journey-mode .card-front-face {
-  flex-direction: row; align-items: center; gap: 12px; padding: .8rem 1.1rem;
-}
-.journey-mode .card-desc,
-.journey-mode .card-flip-hint { display: none; }
-.journey-mode .card-name { font-size: 15px; margin-bottom: 0; }
-.journey-mode .card-num { top: 50%; transform: translateY(-50%); }
-.journey-mode .card-cat-pill { margin-bottom: 0; flex-shrink: 0; }
 
 /* Solidarity mode */
 .solidarity-mode .card-wrap.sel-card .card-front-face {
@@ -279,6 +270,8 @@ body {
   align-items: center; justify-content: center;
   z-index: 2;
 }
+.solidarity-mode .card-flip-hint { display: none; }
+
 .sel-card .solidarity-badge { display: flex; }
 
 /* ─── MODAL ─── */
@@ -290,9 +283,9 @@ body {
 }
 .modal-overlay.open { display: flex; }
 .modal {
-  background: var(--white); border-radius: var(--radius-lg);
+  background: var(--white); border-radius: 0px;
   padding: 2rem; width: 100%; max-width: 520px;
-  max-height: 90vh; overflow-y: auto;
+  max-height: 98vh; overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0,0,0,.15);
 }
 .modal h2 {
@@ -303,24 +296,24 @@ body {
 .form-row label {
   display: block; font-size: 12px; font-weight: 600;
   letter-spacing: .04em; text-transform: uppercase;
-  color: var(--ink-3); margin-bottom: 6px;
+  color: var(--ink); margin-bottom: 6px;
 }
 .form-row input,
 .form-row select,
 .form-row textarea {
   width: 100%; font-family: var(--ff-body); font-size: 14px;
-  padding: 9px 12px; border: 1px solid var(--surface-3);
-  border-radius: 7px; background: var(--surface);
+  padding: 9px 12px; border: 1px solid var(--ink-3);
+  border-radius: 0px; background: var(--white);
   color: var(--ink); outline: none;
   transition: border-color .15s;
 }
 .form-row input:focus,
 .form-row select:focus,
-.form-row textarea:focus { border-color: var(--ink-3); }
+.form-row textarea:focus { border-color: var(--yellow); }
 .form-row textarea { resize: vertical; min-height: 80px; }
 .modal-footer {
   display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.5rem;
-  padding-top: 1rem; border-top: 1px solid var(--surface-3);
+  padding-top: 1rem; border-top: 1px solid var(--ink-3);
 }
 
 /* ─── PRINT PANEL ─── */
@@ -332,7 +325,7 @@ body {
 }
 .print-panel.open { display: flex; }
 .print-box {
-  background: var(--white); border-radius: var(--radius-lg);
+  background: var(--white); border-radius: 0px;
   padding: 2rem; width: 100%; max-width: 440px;
   box-shadow: 0 20px 60px rgba(0,0,0,.15);
 }
@@ -343,24 +336,24 @@ body {
 .print-box p { font-size: 13px; color: var(--ink-2); margin-bottom: 1.5rem; line-height: 1.55; }
 .size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
 .size-card {
-  border: 1.5px solid var(--surface-3); border-radius: 10px;
+  border: 1.5px solid var(--ink); border-radius: 0px;
   padding: .9rem 1rem; cursor: pointer; transition: all .15s; text-align: center;
 }
-.size-card:hover { border-color: var(--ink-3); }
-.size-card.selected { border-color: var(--ink); background: var(--surface-2); }
+.size-card:hover { border-color: var(--yellow); }
+.size-card.selected { border-color: var(--yellow); background: var(--yellow); }
 .size-card .size-name { font-weight: 600; font-size: 14px; display: block; margin-bottom: 4px; }
-.size-card .size-dims { font-size: 12px; color: var(--ink-3); }
+.size-card .size-dims { font-size: 12px; color: var(--ink-2); }
 .size-card .size-icon {
   width: 40px; height: auto; margin: 0 auto .5rem;
   display: flex; align-items: flex-end; justify-content: center; gap: 4px;
 }
 .size-icon .rect-a5 {
-  width: 24px; height: 34px; border: 2px solid var(--ink-3);
-  border-radius: 2px; background: var(--surface-2);
+  width: 24px; height: 34px; border: 2px solid var(--ink);
+  border-radius: 2px; background: var(--white);
 }
 .size-icon .rect-a6 {
-  width: 18px; height: 25px; border: 2px solid var(--ink-3);
-  border-radius: 2px; background: var(--surface-2);
+  width: 18px; height: 25px; border: 2px solid var(--ink);
+  border-radius: 2px; background: var(--white);
 }
 .print-opts { margin-bottom: 1.5rem; }
 .print-opts label {
@@ -368,7 +361,7 @@ body {
   font-size: 13px; color: var(--ink-2); cursor: pointer; margin-bottom: 8px;
 }
 .print-opts input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; }
-.print-footer { display: flex; justify-content: flex-end; gap: 8px; padding-top: 1rem; border-top: 1px solid var(--surface-3); }
+.print-footer { display: flex; justify-content: flex-end; gap: 8px; padding-top: 1rem; border-top: 1px solid var(--ink-2); }
 
 /* ─── COUNT BAR ─── */
 .count-bar {
@@ -385,10 +378,11 @@ body {
 /* ─── FOOTER ─── */
 .site-footer {
   margin-top: 4rem; padding: 1.5rem 2rem;
-  border-top: 1px solid var(--surface-3);
-  font-size: 12px; color: var(--ink-3); text-align: center;
+  border-top: 1px solid var(--black);
+  font-size: 12px; color: var(--white); text-align: center;
+  background-color: var(--black);
 }
-.site-footer a { color: var(--ink-3); }
+.site-footer a { color: var(--yellow); }
 
 /* ─── PRINT STYLES ─── */
 @media print {
@@ -423,10 +417,11 @@ body {
 <!-- SITE HEADER -->
 <header class="site-header" role="banner">
   <div class="header-inner">
-    <a class="logo" href="#" aria-label="Immersive Event Planning Deck home">
-      <span class="logo-title">Immersive Event Planning Deck</span>
-      <span class="logo-sub">Film Hub Midlands</span>
-    </a>
+  <img src="https://raw.githubusercontent.com/nearnowstudio/immersive-event-planning-deck/refs/heads/main/assets/fhm_black.png" alt="FHM logo" style="max-width:70px;max-height:70px;">
+   <!-- REMOVED /* <a class="logo" href="#" aria-label="Immersive Event Planner home">
+      <span class="logo-title">Immersive Event Planner</span>
+      <span class="logo-sub">A BROADER SCREEN CONTENT RESOURCE</span>
+    </a> */ -->
     <div class="header-actions">
       <button class="btn btn-ghost" onclick="openPrintPanel()" title="Print / save as PDF">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -444,7 +439,7 @@ body {
 <main class="main-wrap" id="main">
 
   <div class="hero">
-    <h1>Immersive Event<br><em>Planning Deck</em></h1>
+    <h1>Immersive Event Planner</h1>
     <div class="hero-meta">
       <span>A BFI Film Audience Network resource</span>
       <span class="dot">·</span>
@@ -460,7 +455,6 @@ body {
     <div class="controls-right">
       <div class="mode-tabs" role="group" aria-label="Display mode">
         <button class="mode-tab active" data-mode="browse" onclick="setMode('browse')">Browse</button>
-        <button class="mode-tab" data-mode="journey" onclick="setMode('journey')">Journey map</button>
         <button class="mode-tab" data-mode="solidarity" onclick="setMode('solidarity')">Solidarity round</button>
       </div>
       <button class="btn btn-ghost btn-icon" onclick="shuffle()" title="Shuffle cards" aria-label="Shuffle cards">
@@ -469,7 +463,7 @@ body {
     </div>
   </div>
 
-  <p class="mode-hint" id="mode-hint">Click any card to flip it and reveal the key question and prompts. Hover a card to edit or delete it.</p>
+  <p class="mode-hint" id="mode-hint">Click any card to flip it and reveal the key question and prompts. Hover on a card to edit or delete it.</p>
 
   <div class="count-bar">
     <span class="count-text" id="count-text"></span>
@@ -481,7 +475,7 @@ body {
 
 <!-- FOOTER -->
 <footer class="site-footer">
-  <p>Immersive Event Planning Deck — a resource by <a href="https://filmhubmidlands.org" target="_blank" rel="noopener">Film Hub Midlands</a> in partnership with <a href="https://nearnow.org.uk/" target="_blank" rel="noopener">Near Now</a>. Supported by the BFI Film Audience Network.</p>
+  <p>Immersive Event Planner — a Broader Screen Content resource by <a href="https://filmhubmidlands.org" target="_blank" rel="noopener">Film Hub Midlands</a> in partnership with <a href="https://nearnow.org.uk/" target="_blank" rel="noopener">Near Now</a>. Supported by the BFI Film Audience Network.</p>
 </footer>
 
 <!-- ADD / EDIT CARD MODAL -->
@@ -797,8 +791,7 @@ function filterCat(cat) {
 
 const MODE_HINTS = {
   browse: 'Click any card to flip it and reveal the key question and prompts. Hover a card to edit or delete it.',
-  journey: 'Arrange cards in the order of your planning process. Discuss blockers at each stage. Click to flip.',
-  solidarity: 'Each venue selects 2–3 "most difficult" cards to share pain points. Tap to select (max 3).',
+  solidarity: 'Select 1–3 "most difficult" cards to share pain points. Tap to select (max 3).',
 };
 
 function setMode(mode) {
@@ -1064,7 +1057,7 @@ function doPrint() {
       </p>
       <div style="margin-top:auto;padding-top:8px;border-top:0.5px solid #e8e5de;">
         <p style="font-size:${isA6?'8px':'9px'};color:#b0b0a8;font-family:Arial,sans-serif;letter-spacing:.03em;">
-          Immersive Event Planning Deck · Film Hub Midlands
+          Immersive Event Planner · Film Hub Midlands
         </p>
       </div>
     </div>`;
@@ -1134,7 +1127,7 @@ renderAll();
 
 <!-- Reset-to-defaults link (bottom of page, unobtrusive) -->
 <div style="text-align:center;padding:.75rem;font-size:11px;color:#b8b8b0;">
-  <button onclick="resetToDefaults()" style="background:none;border:none;cursor:pointer;color:#b8b8b0;font-size:11px;font-family:inherit;text-decoration:underline;">Reset all cards to defaults</button>
+  <button onclick="resetToDefaults()" style="background:none;border:none;cursor:pointer;color:#000;font-size:11px;font-family:inherit;text-decoration:underline;">Reset all cards to defaults</button>
 </div>
 
 </body>
