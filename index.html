@@ -523,20 +523,7 @@ body {
 <div class="print-panel" id="print-panel" role="dialog" aria-modal="true" aria-labelledby="print-title">
   <div class="print-box">
     <h2 id="print-title">Print cards</h2>
-    <p>Print all cards (including any you've added or edited) or just the filtered selection. Use your browser's <strong>Print to PDF</strong> option to save a PDF file.</p>
-
-    <div class="size-grid">
-      <div class="size-card selected" id="sz-a5" onclick="selectSize('a5')">
-        <div class="size-icon"><div class="rect-a5"></div></div>
-        <span class="size-name">A5</span>
-        <span class="size-dims">148 × 210 mm</span>
-      </div>
-      <div class="size-card" id="sz-a6" onclick="selectSize('a6')">
-        <div class="size-icon"><div class="rect-a6"></div></div>
-        <span class="size-name">A6</span>
-        <span class="size-dims">105 × 148 mm</span>
-      </div>
-    </div>
+    <p>Print all cards (including any you've added or edited) or just the filtered selection. Use your browser's <strong>Print to PDF</strong> option to save a PDF file.</p><p>Cards are arranged as nine portrait cards on each A4 sheet. For double-sided printing, select <strong>Print on both sides</strong> and choose <strong>Flip on long edge</strong> in your printer settings. Print at <strong>100% / Actual size</strong> and disable any “Fit to page” or scaling options.</p>
 
     <div class="print-opts">
       <label><input type="checkbox" id="po-both" checked> Print both front &amp; back</label>
@@ -1002,123 +989,601 @@ function selectSize(s) {
 }
 
 function doPrint() {
+
   const bothSides = document.getElementById('po-both').checked;
   const filteredOnly = document.getElementById('po-filtered').checked;
   const colour = document.getElementById('po-colour').checked;
-  const toPrint = filteredOnly ? getFiltered() : cards;
-  const isA6 = printSize === 'a6';
 
-  // Dimensions in mm for @page rule
-  const pw = isA6 ? '105mm' : '148mm';
-  const ph = isA6 ? '148mm' : '210mm';
+  // Use the currently filtered cards if requested,
+  // otherwise print the entire deck.
+  let toPrint = filteredOnly ? getFiltered() : [...cards];
 
-  // Category colours for print
+  /*
+    Add blank cards until the total divides exactly into
+    sheets of nine cards.
+
+    The full 39-card deck therefore becomes 45 cards:
+    39 content cards + 6 blank cards.
+  */
+  const blankCardsNeeded = (9 - (toPrint.length % 9)) % 9;
+
+  for (let i = 0; i < blankCardsNeeded; i++) {
+    toPrint.push({
+      id: 'blank-' + i,
+      cat: '',
+      name: '',
+      desc: '',
+      q: '',
+      prompts: '',
+      blank: true
+    });
+  }
+
+  // Category colour settings taken from the website design.
   const catColours = {
-    vision:    { bg:'#eeedfe', text:'#3c3489', pill:'#534ab7' },
-    space:     { bg:'#e1f5ee', text:'#085041', pill:'#0f6e56' },
-    audience:  { bg:'#faece7', text:'#712b13', pill:'#993c1d' },
-    ops:       { bg:'#e6f1fb', text:'#0c447c', pill:'#185fa5' },
-    marketing: { bg:'#fbeaf0', text:'#72243e', pill:'#993556' },
-    risk:      { bg:'#faeeda', text:'#633806', pill:'#854f0b' },
+    vision: {
+      bg: '#eeedfe',
+      text: '#3c3489'
+    },
+    space: {
+      bg: '#e1f5ee',
+      text: '#085041'
+    },
+    audience: {
+      bg: '#faece7',
+      text: '#712b13'
+    },
+    ops: {
+      bg: '#e6f1fb',
+      text: '#0c447c'
+    },
+    marketing: {
+      bg: '#fbeaf0',
+      text: '#72243e'
+    },
+    risk: {
+      bg: '#faeeda',
+      text: '#633806'
+    }
   };
 
-  function pillStyle(cat) {
-    if (!colour) return 'background:#f0efea;color:#4a4a46;';
-    const c = catColours[cat];
-    return `background:${c.bg};color:${c.text};`;
+
+  /*
+    Create the category pill.
+  */
+  function categoryPill(card) {
+
+    if (card.blank) return '';
+
+    const category = catColours[card.cat];
+
+    if (!category) return '';
+
+    const background = colour
+      ? category.bg
+      : '#f0efea';
+
+    const textColour = colour
+      ? category.text
+      : '#4a4a46';
+
+    return `
+      <div class="print-category"
+           style="
+             background:${background};
+             color:${textColour};
+           ">
+        ${esc(CATEGORIES[card.cat])}
+      </div>
+    `;
   }
-  function pillBorder(cat) {
-    if (!colour) return '#b8b8b0';
-    return catColours[cat].pill;
+
+
+  /*
+    Create a card front.
+  */
+  function createFront(card, number) {
+
+    if (card.blank) {
+      return `
+        <div class="print-card print-card-blank">
+        </div>
+      `;
+    }
+
+    return `
+      <div class="print-card print-card-front">
+
+        <div class="print-card-number">
+          ${String(number).padStart(2, '0')}
+        </div>
+
+        ${categoryPill(card)}
+
+        <div class="print-card-title">
+          ${esc(card.name)}
+        </div>
+
+        <div class="print-card-description">
+          ${esc(card.desc)}
+        </div>
+
+      </div>
+    `;
   }
+
+
+  /*
+    Create a card back.
+  */
+  function createBack(card) {
+
+    if (card.blank) {
+      return `
+        <div class="print-card print-card-blank">
+        </div>
+      `;
+    }
+
+    return `
+      <div class="print-card print-card-back">
+
+        ${categoryPill(card)}
+
+        <div class="print-section-label">
+          Key question
+        </div>
+
+        <div class="print-question">
+          ${esc(card.q)}
+        </div>
+
+        <div class="print-section-label">
+          Prompts
+        </div>
+
+        <div class="print-prompts">
+          ${esc(card.prompts)}
+        </div>
+
+      </div>
+    `;
+  }
+
+
+  /*
+    Split the deck into physical sheets containing nine cards.
+  */
+  const sheets = [];
+
+  for (let i = 0; i < toPrint.length; i += 9) {
+    sheets.push(toPrint.slice(i, i + 9));
+  }
+
 
   let pages = '';
-  toPrint.forEach((c, i) => {
-    // FRONT
-    pages += `<div class="pp" style="
-      width:${pw}; height:${ph};
-      padding: ${isA6?'12px 14px':'18px 20px'};
-      box-sizing:border-box;
-      page-break-after:always;
-      background:#ffffff;
-      border: 0.5px solid #ddd;
-      font-family: Georgia, 'Times New Roman', serif;
-      display:flex; flex-direction:column; position:relative;
-    ">
-      <span style="position:absolute;top:${isA6?'10px':'14px'};right:${isA6?'12px':'16px'};font-size:${isA6?'9px':'10px'};color:#b0b0a8;font-family:Arial,sans-serif;font-weight:600;">
-        ${String(i+1).padStart(2,'0')}
-      </span>
-      <span style="display:inline-block;font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:${isA6?'2px 7px':'3px 9px'};border-radius:20px;margin-bottom:${isA6?'8px':'12px'};width:fit-content;${pillStyle(c.cat)}">
-        ${CATEGORIES[c.cat]}
-      </span>
-      <p style="font-size:${isA6?'15px':'20px'};font-weight:400;color:#1a1a18;margin-bottom:${isA6?'6px':'10px'};line-height:1.2;font-family:Georgia,serif;">
-        ${esc(c.name)}
-      </p>
-      <p style="font-size:${isA6?'10px':'12px'};color:#4a4a46;line-height:1.55;font-family:Arial,sans-serif;flex:1;">
-        ${esc(c.desc)}
-      </p>
-      <div style="margin-top:auto;padding-top:8px;border-top:0.5px solid #e8e5de;">
-        <p style="font-size:${isA6?'8px':'9px'};color:#b0b0a8;font-family:Arial,sans-serif;letter-spacing:.03em;">
-          Immersive Event Planner · Film Hub Midlands
-        </p>
-      </div>
-    </div>`;
 
-    // BACK (if both sides selected)
-    if (bothSides) {
-      pages += `<div class="pp" style="
-        width:${pw}; height:${ph};
-        padding:${isA6?'12px 14px':'18px 20px'};
-        box-sizing:border-box;
-        page-break-after:always;
-        background:#ffffff;
-        border: 0.5px solid #ddd;
-        font-family:Arial,sans-serif;
-        display:flex; flex-direction:column; position:relative;
-      ">
-        <span style="display:inline-block;font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:${isA6?'2px 7px':'3px 9px'};border-radius:20px;margin-bottom:${isA6?'8px':'12px'};width:fit-content;${pillStyle(c.cat)}">
-          ${esc(c.name)}
-        </span>
-        <p style="font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b0b0a8;margin-bottom:4px;">
-          Key question
-        </p>
-        <p style="font-size:${isA6?'11px':'13px'};font-weight:600;color:#1a1a18;line-height:1.5;margin-bottom:${isA6?'8px':'12px'};">
-          ${esc(c.q)}
-        </p>
-        <p style="font-size:${isA6?'8px':'9px'};font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b0b0a8;margin-bottom:4px;">
-          Prompts
-        </p>
-        <p style="font-size:${isA6?'10px':'12px'};color:#4a4a46;font-style:italic;line-height:1.55;flex:1;">
-          ${esc(c.prompts)}
-        </p>
-        <div style="margin-top:auto;padding-top:8px;border-top:0.5px solid #e8e5de;">
-          <p style="font-size:${isA6?'8px':'9px'};color:#b0b0a8;letter-spacing:.03em;">
-            filmhubmidlands.org · Broader Screen Content
-          </p>
+
+  sheets.forEach((sheetCards, sheetIndex) => {
+
+    /*
+      FRONT PAGE
+
+      Cards are placed in normal reading order:
+
+      1 2 3
+      4 5 6
+      7 8 9
+    */
+    pages += `
+      <section class="print-page print-front-page">
+
+        <div class="print-grid">
+          ${sheetCards.map((card, index) =>
+            createFront(card, (sheetIndex * 9) + index + 1)
+          ).join('')}
         </div>
-      </div>`;
+
+      </section>
+    `;
+
+
+    /*
+      BACK PAGE
+
+      For duplex printing with "flip on long edge",
+      reverse the card order within each row.
+
+      Front:
+      1 2 3
+
+      Reverse:
+      3 2 1
+
+      This means that after the sheet is printed on both sides,
+      the back of each cut card corresponds with its front.
+    */
+    if (bothSides) {
+
+      const backCards = [
+        sheetCards[2],
+        sheetCards[1],
+        sheetCards[0],
+
+        sheetCards[5],
+        sheetCards[4],
+        sheetCards[3],
+
+        sheetCards[8],
+        sheetCards[7],
+        sheetCards[6]
+      ];
+
+      pages += `
+        <section class="print-page print-back-page">
+
+          <div class="print-grid">
+            ${backCards.map(card =>
+              createBack(card)
+            ).join('')}
+          </div>
+
+        </section>
+      `;
     }
+
   });
 
+
+  /*
+    Insert the generated print pages into the dedicated print area.
+  */
   const printArea = document.getElementById('print-area');
+
   printArea.style.display = 'block';
+
   printArea.innerHTML = `
+
     <style>
-      @page { size: ${pw} ${ph}; margin: 0; }
-      body { margin: 0; padding: 0; }
-      .pp { display:flex; flex-direction:column; }
+
+      /*
+        A4 portrait paper.
+
+        Margins are handled inside the printable layout
+        rather than through the browser's @page margin.
+      */
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+
+
+      html,
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+      }
+
+
+      #print-area {
+        display: block !important;
+        width: 210mm;
+        background: white;
+      }
+
+
+      /*
+        Each print page represents one side of an A4 sheet.
+
+        A 10mm margin is retained around the grid to give
+        most home printers sufficient printable clearance.
+      */
+      .print-page {
+
+        width: 210mm;
+        height: 297mm;
+
+        padding: 10mm;
+
+        box-sizing: border-box;
+
+        background: white;
+
+        page-break-after: always;
+
+        break-after: page;
+
+        display: flex;
+
+        align-items: stretch;
+
+        justify-content: stretch;
+      }
+
+
+      .print-page:last-child {
+
+        page-break-after: auto;
+
+        break-after: auto;
+      }
+
+
+      /*
+        3 × 3 grid.
+
+        Available page space:
+        190mm × 277mm
+
+        Each card therefore occupies approximately:
+        63.33mm × 92.33mm
+      */
+      .print-grid {
+
+        width: 190mm;
+        height: 277mm;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        grid-template-rows: repeat(3, 1fr);
+
+        gap: 0;
+
+        box-sizing: border-box;
+      }
+
+
+      /*
+        Individual card.
+
+        The black 1.5px border acts as the cut line.
+      */
+      .print-card {
+
+        position: relative;
+
+        width: 100%;
+        height: 100%;
+
+        box-sizing: border-box;
+
+        border: 1.5px solid #000000;
+
+        background: #ffffff;
+
+        padding: 7mm 6mm;
+
+        overflow: hidden;
+
+        font-family:
+          "Jost",
+          Arial,
+          Helvetica,
+          sans-serif;
+
+        color: #1a1a18;
+
+        display: flex;
+
+        flex-direction: column;
+
+        -webkit-print-color-adjust: exact;
+
+        print-color-adjust: exact;
+      }
+
+
+      /*
+        Card number.
+      */
+      .print-card-number {
+
+        position: absolute;
+
+        top: 5mm;
+
+        right: 5mm;
+
+        font-size: 8pt;
+
+        font-weight: 500;
+
+        color: #8a8a84;
+      }
+
+
+      /*
+        Category pill.
+      */
+      .print-category {
+
+        display: inline-block;
+
+        width: fit-content;
+
+        max-width: calc(100% - 12mm);
+
+        padding: 2mm 4mm;
+
+        margin-bottom: 4mm;
+
+        font-size: 6.5pt;
+
+        font-weight: 600;
+
+        letter-spacing: 0.05em;
+
+        text-transform: uppercase;
+
+        line-height: 1.2;
+      }
+
+
+      /*
+        Front of card.
+      */
+      .print-card-title {
+
+        font-size: 14pt;
+
+        font-weight: 400;
+
+        line-height: 1.15;
+
+        margin-bottom: 3mm;
+
+        padding-right: 10mm;
+      }
+
+
+      .print-card-description {
+
+        font-size: 8.5pt;
+
+        line-height: 1.45;
+
+        color: #4a4a46;
+      }
+
+
+      /*
+        Back of card.
+      */
+      .print-section-label {
+
+        font-size: 6.5pt;
+
+        font-weight: 600;
+
+        letter-spacing: 0.06em;
+
+        text-transform: uppercase;
+
+        color: #8a8a84;
+
+        margin-bottom: 1.5mm;
+      }
+
+
+      .print-question {
+
+        font-size: 9pt;
+
+        font-weight: 500;
+
+        line-height: 1.4;
+
+        margin-bottom: 5mm;
+
+        color: #1a1a18;
+      }
+
+
+      .print-prompts {
+
+        font-size: 8pt;
+
+        font-style: italic;
+
+        line-height: 1.45;
+
+        color: #4a4a46;
+      }
+
+
+      /*
+        Blank cards retain their border
+        but have no printed content.
+      */
+      .print-card-blank {
+
+        background: #ffffff;
+      }
+
+
+      /*
+        Avoid unexpected browser-generated spacing.
+      */
+      .print-card *,
+      .print-card p {
+
+        box-sizing: border-box;
+
+        margin-top: 0;
+      }
+
+
+      /*
+        Hide the main website while printing.
+
+        The existing print media rule in the main stylesheet
+        already does much of this, but these declarations
+        ensure the generated A4 pages are isolated.
+      */
+      @media print {
+
+        body > * {
+
+          visibility: hidden !important;
+        }
+
+
+        #print-area,
+        #print-area * {
+
+          visibility: visible !important;
+        }
+
+
+        #print-area {
+
+          position: absolute !important;
+
+          left: 0 !important;
+
+          top: 0 !important;
+
+          width: 210mm !important;
+
+          margin: 0 !important;
+
+          padding: 0 !important;
+        }
+
+      }
+
     </style>
+
     ${pages}
   `;
 
+
   closePrintPanel();
+
+
+  /*
+    Small delay ensures the browser has finished rendering
+    the A4 grid before opening the print dialogue.
+  */
   setTimeout(() => {
+
     window.print();
-    setTimeout(() => {
-      printArea.style.display = 'none';
-      printArea.innerHTML = '';
-    }, 1000);
-  }, 200);
+
+  }, 300);
+
+
+  /*
+    Clear the generated pages once the print dialogue closes.
+  */
+  window.onafterprint = () => {
+
+    printArea.innerHTML = '';
+
+    printArea.style.display = 'none';
+  };
 }
 
 /* ═══════════════════════════════════════════════════════════
