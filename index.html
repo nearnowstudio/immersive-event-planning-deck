@@ -484,9 +484,18 @@ body {
 
 </main>
 
+<!-- Reset-to-defaults link (bottom of page, larger version) -->
+<div style="text-align:center">
+  <button class="btn btn-ghost" style="font-size:18px;padding:14px 20px" onclick="resetToDefaults()">Reset all cards to defaults</button>
+</div>
+
 <!-- FOOTER -->
 <footer class="site-footer">
   <p>Immersive Event Planner — a Broader Screen Content resource by <a href="https://filmhubmidlands.org" target="_blank" rel="noopener">Film Hub Midlands</a> in partnership with <a href="https://nearnow.org.uk/" target="_blank" rel="noopener">Near Now</a>. Supported by the BFI Film Audience Network.</p>
+<br>
+<a href="https://nearnowstudio.github.io/immersive-event-planning-deck/privacy-policy.html">
+  Privacy Policy
+</a>
 </footer>
 
 <!-- ADD / EDIT CARD MODAL -->
@@ -1600,11 +1609,6 @@ function doPrint() {
    ═══════════════════════════════════════════════════════════ */
 renderAll();
 </script>
-
-<!-- Reset-to-defaults link (bottom of page, unobtrusive) -->
-<div style="text-align:center;padding:.75rem;font-size:11px;color:#b8b8b0;">
-  <button onclick="resetToDefaults()" style="background:none;border:none;cursor:pointer;color:#000;font-size:11px;font-family:inherit;text-decoration:underline;">Reset all cards to defaults</button>
-</div>
 
 </body>
 </html>
