@@ -8,201 +8,336 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
-/* ─── RESET & BASE ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --ff-display: "Jost", Arial, Helvetica, system-ui, sans-serif;
-  --ff-body: "Jost", Arial, Helvetica, system-ui, sans-serif;
-  --ink: #1a1a18;
-  --ink-2: #4a4a46;
-  --ink-3: #8a8a84;
-  --ink-4: #b8b8b0;
-  --surface: #ffffff; /* was #faf9f6 */
-  --surface-2: #f2f0eb;
-  --surface-3: #e8e5de;
-  --white: #ffffff;
-  --yellow: #fbb860;
-  --red: #ed5638;
-  --black: #1f1f2b;
-  --radius: 10px;
-  --radius-lg: 16px;
-  /* category colours */
-  --c-vision-bg:    #eeedfe; --c-vision-text:    #3c3489; --c-vision-mid: #534ab7;
-  --c-space-bg:     #e1f5ee; --c-space-text:     #085041; --c-space-mid: #0f6e56;
-  --c-audience-bg:  #faece7; --c-audience-text:  #712b13; --c-audience-mid: #993c1d;
-  --c-ops-bg:       #e6f1fb; --c-ops-text:       #0c447c; --c-ops-mid: #185fa5;
-  --c-marketing-bg: #fbeaf0; --c-marketing-text: #72243e; --c-marketing-mid: #993556;
-  --c-risk-bg:      #faeeda; --c-risk-text:      #633806; --c-risk-mid: #854f0b;
-}
+<style>
 
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--ff-body);
-  background: var(--surface);
-  color: var(--ink);
-  line-height: 1.6;
-  min-height: 100vh;
-}
+  /* ─── RESET & BASE ─── */
 
-/* ─── HEADER ─── */
-.site-header {
-  background: var(--white);
-  border-top: 5px solid var(--yellow);
-  padding: 0 2rem;
-  position: sticky; top: 0; z-index: 100;
-}
-.header-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 100px; gap: 1rem;
-}
-.logo {
-  display: flex; align-items: baseline; gap: 10px; text-decoration: none;
-}
-.logo-title {
-  font-family: var(--ff-display);
-  font-size: 17px; color: var(--ink); line-height: 1;
-}
-.logo-sub {
-  font-size: 11px; color: var(--ink-3); letter-spacing: .05em; text-transform: uppercase;
-}
-.header-actions { display: flex; gap: 8px; align-items: center; }
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-/* ─── BUTTONS ─── */
-.btn {
-  font-family: var(--ff-body); font-size: 13px; font-weight: 600;
-  padding: 7px 16px; border-radius: 0px; cursor: pointer;
-  border: 2px solid transparent; transition: all .15s; white-space: nowrap;
-  display: inline-flex; align-items: center; gap: 6px;
-}
-.btn-ghost {
-  background: var(--yellow); border-color: var(--yellow);
-  color: #000;
-}
-.btn-ghost:hover { background: var(--black); border-color: var(--black); color: var(--white); }
-.btn-primary {
-  background: var(--ink); color: var(--white); border-color: var(--black);
-}
-.btn-primary:hover { background: var(--yellow); color: #000; border-color: var(--yellow); }
-.btn-danger {
-  background: transparent; border-color: var(--yellow); color: var(--yellow);
-}
-.btn-danger:hover { background: var(--black); border-color: var(--black); color: var(--white); }
-.btn-icon {
-  width: 26px; height: 26px; padding: 0; justify-content: center;
-  border: 1px solid var(--black);
-  background: transparent; border-color: var(--black); color: var(--black);
-}
-.btn-icon:hover { background: var(--yellow); color: #000; border-color: var(--yellow); }
+  :root {
+    --ff-display: "Jost", Arial, Helvetica, system-ui, sans-serif;
+    --ff-body: "Jost", Arial, Helvetica, system-ui, sans-serif;
 
-/* ─── MAIN LAYOUT ─── */
-.main-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+    --ink: #1a1a18;
+    --ink-2: #4a4a46;
+    --ink-3: #8a8a84;
 
-/* ─── HERO ─── */
-.hero {
-  padding: 2.5rem 0 2rem;
-  border-bottom: 1px solid var(--surface-3);
-  margin-bottom: 1.75rem;
-}
-.hero h1 {
-  font-family: var(--ff-display);
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 600; line-height: 1.15;
-  color: var(--ink); margin-bottom: .5rem;
-}
-.hero h1 em { font-style: italic; color: var(--ink-2); }
-.hero-meta {
-  font-size: 14px; color: var(--ink);
-  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-  margin-top: 1rem;
-}
-.hero-meta a { color: var(--ink-3); }
-.hero-meta a:hover { color: var(--yellow); }
-.dot { color: var(--yellow); }
+    --surface: #ffffff;
+    --surface-3: #e8e5de;
 
-/* ─── PRIVACY POLICY CONTENT ─── */
+    --white: #ffffff;
+    --yellow: #fbb860;
+    --red: #ed5638;
+    --black: #1f1f2b;
+  }
 
-.policy-content {
-  max-width: 850px;
-  margin: 0 auto;
-  padding-bottom: 2rem;
-}
 
-.policy-section {
-  margin-bottom: 2.5rem;
-}
+  html {
+    scroll-behavior: smooth;
+  }
 
-.policy-section h2 {
-  font-family: var(--ff-display);
-  font-size: clamp(22px, 3vw, 30px);
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--ink);
-  margin-bottom: 1rem;
-}
 
-.policy-section h3 {
-  font-family: var(--ff-display);
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--ink);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
+  body {
+    font-family: var(--ff-body);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
 
-.policy-section p {
-  font-size: 16px;
-  color: var(--ink-2);
-  margin-bottom: 1rem;
-  line-height: 1.7;
-}
 
-.policy-section a {
-  color: var(--ink);
-  text-decoration-color: var(--yellow);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
+  /* ─── HEADER ─── */
 
-.policy-section a:hover {
-  color: var(--red);
-}
+  .site-header {
+    background: var(--white);
+    border-top: 5px solid var(--yellow);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-.back-link {
-  margin-bottom: 1.5rem;
-}
 
-.back-link a {
-  display: inline-flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 2px solid var(--yellow);
-  padding-bottom: 2px;
-}
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
 
-.back-link a:hover {
-  color: var(--red);
-}
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-/* ─── FOOTER ─── */
-.site-footer {
-  margin-top: 4rem; padding: 1.5rem 2rem;
-  border-top: 1px solid var(--black);
-  font-size: 12px; color: var(--white); text-align: center;
-  background-color: var(--black);
-}
-.site-footer a { color: var(--yellow); }
+    height: 100px;
+    gap: 1rem;
+  }
 
-/* ─── RESPONSIVE ─── */
-@media (max-width: 640px) {
-  .main-wrap { padding: 1rem 1rem 3rem; }
-  .header-inner { padding: 0; }
-  .site-header { padding: 0 1rem; }
-  .logo-sub { display: none; }
-}
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+  }
+
+
+  .header-logo img {
+    display: block;
+    max-width: 70px;
+    max-height: 70px;
+    width: auto;
+    height: auto;
+  }
+
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+
+  /* ─── BUTTONS ─── */
+
+  .btn {
+    font-family: var(--ff-body);
+    font-size: 13px;
+    font-weight: 600;
+
+    padding: 7px 16px;
+
+    border-radius: 0;
+    border: 2px solid transparent;
+
+    cursor: pointer;
+    transition: all 0.15s;
+
+    white-space: nowrap;
+
+    display: inline-flex;
+    align-items: center;
+
+    text-decoration: none;
+  }
+
+
+  .btn-ghost {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: #000;
+  }
+
+
+  .btn-ghost:hover {
+    background: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+  }
+
+
+  /* ─── MAIN LAYOUT ─── */
+
+  .main-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+
+  /* ─── HERO ─── */
+
+  .hero {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--surface-3);
+    margin-bottom: 1.75rem;
+  }
+
+
+  .hero h1 {
+    font-family: var(--ff-display);
+
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    color: var(--ink);
+
+    margin-bottom: 0.5rem;
+  }
+
+
+  .hero-meta {
+    font-size: 14px;
+    color: var(--ink);
+
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    margin-top: 1rem;
+  }
+
+
+  .dot {
+    color: var(--yellow);
+  }
+
+
+  /* ─── PRIVACY POLICY CONTENT ─── */
+
+  .policy-content {
+    max-width: 850px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+  }
+
+
+  .policy-section {
+    margin-bottom: 3rem;
+  }
+
+
+  .policy-section h2 {
+    font-family: var(--ff-display);
+
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+
+    line-height: 1.2;
+
+    color: var(--ink);
+
+    margin-bottom: 1rem;
+  }
+
+
+  .policy-section h3 {
+    font-family: var(--ff-display);
+
+    font-size: 18px;
+    font-weight: 500;
+
+    color: var(--ink);
+
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+
+  .policy-section p {
+    font-size: 16px;
+
+    color: var(--ink-2);
+
+    margin-bottom: 1rem;
+
+    line-height: 1.7;
+  }
+
+
+  .policy-section a {
+    color: var(--ink);
+
+    text-decoration-color: var(--yellow);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+
+  .policy-section a:hover {
+    color: var(--red);
+  }
+
+
+  /* ─── BACK LINK ─── */
+
+  .back-link {
+    margin-bottom: 2rem;
+  }
+
+
+  .back-link a {
+    display: inline-flex;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--ink);
+
+    text-decoration: none;
+
+    border-bottom: 2px solid var(--yellow);
+
+    padding-bottom: 2px;
+  }
+
+
+  .back-link a:hover {
+    color: var(--red);
+  }
+
+
+  /* ─── FOOTER ─── */
+
+  .site-footer {
+    margin-top: 4rem;
+
+    padding: 1.5rem 2rem;
+
+    border-top: 1px solid var(--black);
+
+    font-size: 12px;
+    color: var(--white);
+
+    text-align: center;
+
+    background-color: var(--black);
+  }
+
+
+  .site-footer a {
+    color: var(--yellow);
+  }
+
+
+  /* ─── RESPONSIVE ─── */
+
+  @media (max-width: 640px) {
+
+    .main-wrap {
+      padding: 1rem 1rem 3rem;
+    }
+
+    .site-header {
+      padding: 0 1rem;
+    }
+
+    .header-inner {
+      height: 80px;
+    }
+
+    .header-logo img {
+      max-width: 55px;
+      max-height: 55px;
+    }
+
+    .hero {
+      padding: 2rem 0 1.5rem;
+    }
+
+    .hero-meta {
+      gap: 0.5rem;
+    }
+
+    .policy-section {
+      margin-bottom: 2.25rem;
+    }
+
+  }
+
 </style>
 </head>
 <body>
