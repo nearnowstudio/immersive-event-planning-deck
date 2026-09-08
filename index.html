@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Version 2.0: preserves original functionality while fixing HTML/CSS validity, storage resilience, shuffle behaviour and keyboard accessibility. -->
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -254,10 +255,16 @@ body {
   display: flex; align-items: center; gap: 4px; padding: 0;
 }
 
+.card-interactive:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 4px;
+}
+
 /* Card action row (edit/delete) */
 .card-actions {
   display: none; position: absolute; bottom: 0; left: 0; right: 0;
   padding: 8px 10px;
+  /* background: linear-gradient(transparent, rgba(255,255,255,.95) 40%); */
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   justify-content: flex-end; gap: 6px;
 }
@@ -425,7 +432,9 @@ body {
 <!-- SITE HEADER -->
 <header class="site-header" role="banner">
   <div class="header-inner">
-  <img src="https://raw.githubusercontent.com/nearnowstudio/immersive-event-planning-deck/refs/heads/main/assets/fhm_black.png" alt="FHM logo" style="max-width:70px;max-height:70px;">
+  <a href="./" aria-label="Immersive Event Planner home">
+    <img src="https://raw.githubusercontent.com/nearnowstudio/immersive-event-planning-deck/refs/heads/main/assets/fhm_black.png" alt="Film Hub Midlands" style="max-width:70px;max-height:70px;">
+  </a>
    <!-- REMOVED /* <a class="logo" href="#" aria-label="Immersive Event Planner home">
       <span class="logo-title">Immersive Event Planner</span>
       <span class="logo-sub">A BROADER SCREEN CONTENT RESOURCE</span>
@@ -449,7 +458,7 @@ body {
   <div class="hero">
     <h1>Immersive Event Planner</h1>
     <div class="hero-meta">
-	<span>This is a BFI FAN resource, created to support the exhibition of <em><a href="https://filmhubmidlands.org/show/exhibitor-resources/broader-screen-content/">Broader Screen</a></em> content.</span>
+	<span>This is a BFI FAN resource, created to support the exhibition of <em><a href="https://filmhubmidlands.org/show/exhibitor-resources/broader-screen-content/" target="_blank" rel="noopener">Broader Screen</a></em> content.</span>
 	<span>Film Hub Midlands are supporting the exhibition of <em>Broader Screen</em> content through a collection of the latest guidance, insights, toolkits, materials, and key contacts for FAN members.</span>
       <!-- REMOVED <span>A BFI Film Audience Network resource</span>
       <span class="dot">·</span>
@@ -491,10 +500,8 @@ body {
 <!-- FOOTER -->
 <footer class="site-footer">
   <p>Immersive Event Planner — a Broader Screen Content resource by <a href="https://filmhubmidlands.org" target="_blank" rel="noopener">Film Hub Midlands</a> in partnership with <a href="https://nearnow.org.uk/" target="_blank" rel="noopener">Near Now</a>. Supported by the BFI Film Audience Network.</p>
-<br>
-<a href="https://nearnowstudio.github.io/immersive-event-planning-deck/privacy-policy.html">
-  Privacy Policy
-</a>
+  <br>
+  <a href="https://nearnowstudio.github.io/immersive-event-planning-deck/privacy-policy.html">Privacy Policy</a>
 </footer>
 
 <!-- ADD / EDIT CARD MODAL -->
@@ -750,24 +757,44 @@ let activeMode = 'browse';
 let flippedIds = new Set();
 let solidarityIds = new Set();
 let nextId = Math.max(...cards.map(c=>c.id)) + 1;
-let printSize = 'a5';
+
+function getDefaultCards() {
+  return DEFAULT_CARDS.map(c => ({ ...c }));
+}
 
 function loadCards() {
   try {
     const saved = localStorage.getItem('imm-deck-cards');
-    if (saved) return JSON.parse(saved);
-  } catch(e) {}
-  return DEFAULT_CARDS.map(c => ({...c}));
+    if (!saved) return getDefaultCards();
+
+    const parsed = JSON.parse(saved);
+    if (!Array.isArray(parsed)) return getDefaultCards();
+
+    return parsed;
+  } catch (e) {
+    console.warn('Could not load saved cards. Using defaults instead.', e);
+    return getDefaultCards();
+  }
 }
+
 function saveCards() {
-  try { localStorage.setItem('imm-deck-cards', JSON.stringify(cards)); } catch(e) {}
+  try {
+    localStorage.setItem('imm-deck-cards', JSON.stringify(cards));
+  } catch (e) {
+    console.warn('Could not save cards to local storage.', e);
+  }
 }
+
 function resetToDefaults() {
   if (!confirm('Reset all cards to the original defaults? Any edits or new cards will be lost.')) return;
+
   localStorage.removeItem('imm-deck-cards');
-  cards = DEFAULT_CARDS.map(c => ({...c}));
-  nextId = Math.max(...cards.map(c=>c.id)) + 1;
-  flippedIds.clear(); solidarityIds.clear();
+  cards = getDefaultCards();
+  nextId = Math.max(...cards.map(c => c.id)) + 1;
+  activeCat = 'all';
+  setMode('browse');
+  flippedIds.clear();
+  solidarityIds.clear();
   renderAll();
 }
 
@@ -810,14 +837,24 @@ function setMode(mode) {
   renderCards();
 }
 
+function shuffleArray(array) {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 function shuffle() {
-  const filtered = getFiltered();
-  filtered.sort(()=>Math.random()-.5);
-  // reorder within full array preserving non-filtered
-  const filteredIds = new Set(filtered.map(c=>c.id));
-  const others = cards.filter(c=>!filteredIds.has(c.id));
+  const filtered = shuffleArray(getFiltered());
+  const filteredIds = new Set(filtered.map(c => c.id));
+  const others = cards.filter(c => !filteredIds.has(c.id));
+
   cards = [...filtered, ...others];
-  flippedIds.clear(); solidarityIds.clear();
+  saveCards();
+  flippedIds.clear();
+  solidarityIds.clear();
   renderCards();
 }
 
@@ -856,22 +893,29 @@ function cardHTML(c, i) {
   const isFlipped = flippedIds.has(c.id);
   const isSel = solidarityIds.has(c.id);
   const selClass = activeMode === 'solidarity' && isSel ? 'sel-card' : '';
+  const categoryName = CATEGORIES[c.cat] || 'Uncategorised';
+  const interactionLabel = activeMode === 'solidarity'
+    ? `Select ${esc(c.name)} for the three-card set`
+    : `Flip ${esc(c.name)} card`;
 
   const flipIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
 
-  return `<div class="card-wrap ${isFlipped?'flipped':''} ${selClass}" role="listitem"
-    data-id="${c.id}" onclick="cardClick(${c.id})">
+  return `<div class="card-wrap ${isFlipped?'flipped':''} ${selClass}" role="listitem">
+    <div class="card-interactive" role="button" tabindex="0" aria-label="${interactionLabel}"
+      aria-pressed="${activeMode === 'solidarity' ? isSel : isFlipped}"
+      data-id="${c.id}" onclick="cardClick(${c.id})"
+      onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); cardClick(${c.id}); }">
     <div class="solidarity-badge" aria-hidden="true">${[...solidarityIds].indexOf(c.id)+1||''}</div>
     <div class="card-inner">
       <div class="card-face card-front-face">
-        <span class="card-num" aria-hidden="true">${String(i+1).padStart(2,'0')}</span>
-        <span class="card-cat-pill ${catPillClass(c.cat)}">${CATEGORIES[c.cat]}</span>
+        <span class="card-num" aria-hidden="true">${String(c.id).padStart(2,'0')}</span>
+        <span class="card-cat-pill ${catPillClass(c.cat)}">${categoryName}</span>
         <p class="card-name">${esc(c.name)}</p>
         <p class="card-desc">${esc(c.desc)}</p>
         <p class="card-flip-hint">${flipIcon} Tap to flip</p>
       </div>
       <div class="card-face card-back-face">
-        <span class="card-cat-pill ${catPillClass(c.cat)}">${CATEGORIES[c.cat]}</span>
+        <span class="card-cat-pill ${catPillClass(c.cat)}">${categoryName}</span>
         <p class="back-section-label">Key question</p>
         <p class="back-question">${esc(c.q)}</p>
         <p class="back-section-label">Prompts</p>
@@ -880,6 +924,7 @@ function cardHTML(c, i) {
           ${flipIcon} Flip back
         </button>
       </div>
+    </div>
     </div>
     <div class="card-actions" onclick="event.stopPropagation()">
       <button class="btn btn-ghost" style="font-size:12px;padding:5px 12px" onclick="openEditCard(${c.id})">
@@ -910,13 +955,13 @@ function cardClick(id) {
   }
   if (flippedIds.has(id)) flippedIds.delete(id);
   else flippedIds.add(id);
-  const el = document.querySelector(`.card-wrap[data-id="${id}"]`);
+  const el = document.querySelector(`.card-interactive[data-id="${id}"]`)?.closest('.card-wrap');
   if (el) el.classList.toggle('flipped', flippedIds.has(id));
   document.getElementById('count-text').textContent = getFiltered().length + ' card' + (getFiltered().length !== 1 ? 's' : '');
 }
 function flipBack(id) {
   flippedIds.delete(id);
-  const el = document.querySelector(`.card-wrap[data-id="${id}"]`);
+  const el = document.querySelector(`.card-interactive[data-id="${id}"]`)?.closest('.card-wrap');
   if (el) el.classList.remove('flipped');
 }
 
@@ -998,11 +1043,6 @@ function openPrintPanel() {
 }
 function closePrintPanel() {
   document.getElementById('print-panel').classList.remove('open');
-}
-function selectSize(s) {
-  printSize = s;
-  document.getElementById('sz-a5').classList.toggle('selected', s==='a5');
-  document.getElementById('sz-a6').classList.toggle('selected', s==='a6');
 }
 
 function doPrint() {
@@ -1595,12 +1635,10 @@ function doPrint() {
   /*
     Clear the generated pages once the print dialogue closes.
   */
-  window.onafterprint = () => {
-
+  window.addEventListener('afterprint', () => {
     printArea.innerHTML = '';
-
     printArea.style.display = 'none';
-  };
+  }, { once: true });
 }
 
 /* ═══════════════════════════════════════════════════════════
